@@ -255,8 +255,8 @@ impl EventOpt {
 impl ToRustType for EventOpt {
     fn to_rust_type(&self) -> String {
         match self {
-            EventOpt::Optional(event) => format!("std::option::Option<{}>", event.name),
-            EventOpt::Required(event) => event.name.clone(),
+            EventOpt::Optional(event) => format!("std::option::Option<{}Event>", event.name),
+            EventOpt::Required(event) => format!("{}Event", event.name),
         }
     }
 }

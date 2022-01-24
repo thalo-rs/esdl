@@ -153,7 +153,7 @@ impl Compiler {
 
             write!(
                 code,
-                ") -> std::result::Result<{}Event, Self::Error>;",
+                ") -> std::result::Result<{}, Self::Error>;",
                 command.events.to_rust_type()
             );
         }
