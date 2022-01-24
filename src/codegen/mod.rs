@@ -141,6 +141,8 @@ impl Compiler {
 
     fn compile_schema_commands(code: &mut String, name: &str, commands: &HashMap<String, Command>) {
         writeln!(code, "pub trait {}Command {{", name);
+        writeln!(code, "    type Error;");
+        writeln!(code);
 
         for (command_name, command) in commands {
             write!(code, "    fn {}(&self", command_name);
@@ -151,7 +153,7 @@ impl Compiler {
 
             write!(
                 code,
-                ") -> std::result::Result<{}Event, thalo::aggregate::AggregateError>;",
+                ") -> std::result::Result<{}Event, Self::Error>;",
                 command.events.to_rust_type()
             );
         }
