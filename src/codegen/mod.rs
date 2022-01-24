@@ -151,7 +151,7 @@ impl Compiler {
 
             write!(
                 code,
-                ") -> std::result::Result<{}, thalo::aggregate::AggregateError>;",
+                ") -> std::result::Result<{}Event, thalo::aggregate::AggregateError>;",
                 command.events.to_rust_type()
             );
         }
