@@ -503,6 +503,7 @@ pub enum Scalar {
     Int,
     Float,
     Bool,
+    Timestamp,
 }
 
 #[cfg(feature = "codegen")]
@@ -513,6 +514,7 @@ impl ToRustType for Scalar {
             Scalar::Int => "i64".to_string(),
             Scalar::Float => "f64".to_string(),
             Scalar::Bool => "bool".to_string(),
+            Scalar::Timestamp => "chrono::DateTime<chrono::FixedOffset>".to_string(),
         }
     }
 }
@@ -524,6 +526,7 @@ impl From<crate::parser::types::Scalar> for Scalar {
             crate::parser::types::Scalar::Int => Scalar::Int,
             crate::parser::types::Scalar::Float => Scalar::Float,
             crate::parser::types::Scalar::Bool => Scalar::Bool,
+            crate::parser::types::Scalar::Timestamp => Scalar::Timestamp,
         }
     }
 }

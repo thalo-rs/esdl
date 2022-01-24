@@ -93,6 +93,7 @@ pub enum Scalar {
     Int,
     Float,
     Bool,
+    Timestamp,
 }
 
 pub fn parse_scalar_string(input: Span) -> IResult<Span, Scalar> {
@@ -111,12 +112,17 @@ pub fn parse_scalar_bool(input: Span) -> IResult<Span, Scalar> {
     value(Scalar::Bool, tag("Bool"))(input)
 }
 
+pub fn parse_scalar_timestamp(input: Span) -> IResult<Span, Scalar> {
+    value(Scalar::Timestamp, tag("Timestamp"))(input)
+}
+
 pub fn parse_scalar(input: Span) -> IResult<Span, Scalar> {
     alt((
         parse_scalar_string,
         parse_scalar_int,
         parse_scalar_float,
         parse_scalar_bool,
+        parse_scalar_timestamp,
     ))(input)
 }
 
