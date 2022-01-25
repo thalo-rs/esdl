@@ -1,10 +1,25 @@
-pre_bump_hooks = []
-post_bump_hooks = []
+pre_bump_hooks = [
+  # Prevent bumping from non-main branch
+  """
+  sh -c "if [[ \\"$(git rev-parse --abbrev-ref HEAD)\\" != \\"main\\" ]]; then echo \\"[error] you can only bump version on main branch\\"; exit 1; fi"
+  """,
+  "echo 'bumping from {{latest}} to {{version}}'",
+  # Update crate versions
+  "cargo bump {{version}}",
+  "cargo build --workspace --release",
+]
 
-[commit_types]
+post_bump_hooks = [
+  "git push",
+  "git push origin {{version}}",
+  "echo 'publishing esdl {{version}}'",
+  "cargo publish -p esdl",
+]
 
 [changelog]
 path = "CHANGELOG.md"
-authors = []
-
-[bump_profiles]
+template = "remote"
+remote = "github.com"
+repository = "esdl"
+owner = "thalo-rs"
+authors = [{ signature = "Ari Seyhun", username = "tqwewe" }]
