@@ -5,7 +5,6 @@ use nom::{
     sequence::{delimited, pair},
 };
 use nom_supreme::tag::complete::tag;
-use serde::Serialize;
 
 use super::{
     event::Field, ident::parse_camel_ident, parsers::keyword_ident_structure, IResult, Span,
@@ -87,7 +86,7 @@ pub fn parse_optional_or_required_type(input: Span) -> IResult<Span, OptionalOrR
     optional_or_required_parser(input)
 }
 
-#[derive(Clone, Copy, Debug, PartialEq, Serialize)]
+#[derive(Clone, Copy, Debug, PartialEq)]
 pub enum Scalar {
     String,
     Int,

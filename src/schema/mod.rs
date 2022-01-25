@@ -1,4 +1,5 @@
-use std::collections::HashMap;
+
+use serde::Serialize;
 
 pub use error::Error;
 
@@ -8,7 +9,7 @@ use crate::codegen::ToRustType;
 mod error;
 
 /// Schema definition including aggregate, commands, events & custom types.
-#[derive(Clone, Debug, PartialEq)]
+#[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct Schema {
     pub aggregate: Aggregate,
     pub events: HashMap<String, Event>,
@@ -74,7 +75,7 @@ impl Schema {
 ///   make_transaction(amount: Float): (DepositedFunds! | WithdrewFunds!)
 /// }
 /// ```
-#[derive(Clone, Debug, PartialEq)]
+#[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct Aggregate {
     pub name: String,
     pub commands: HashMap<String, Command>,
@@ -111,7 +112,7 @@ impl Aggregate {
 /// Command definition with name, params and resulting events.
 /// - `open_account(initial_balance: Float!): OpenedAccount`
 /// - `make_transaction(amount: Float!): (DepositedFunds | WithdrewFunds!)`
-#[derive(Clone, Debug, PartialEq)]
+#[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct Command {
     pub name: String,
     pub params: Vec<Param>,
@@ -152,7 +153,7 @@ impl Command {
 }
 
 /// Command parameter with name and type.
-#[derive(Clone, Debug, PartialEq)]
+#[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct Param {
     pub name: String,
     pub ty: RepeatableType,
@@ -173,7 +174,7 @@ impl Param {
 /// Events resulted by a command.
 /// - `Event`
 /// - `(EventOne, EventTwo!)`
-#[derive(Clone, Debug, PartialEq)]
+#[derive(Clone, Debug, PartialEq, Serialize)]
 pub enum CommandEvents {
     Single(EventOpt),
     Tuple(Vec<EventOpt>),
@@ -219,7 +220,7 @@ impl ToRustType for CommandEvents {
 }
 
 /// Optional or required event from a command.
-#[derive(Clone, Debug, PartialEq)]
+#[derive(Clone, Debug, PartialEq, Serialize)]
 pub enum EventOpt {
     Optional(Event),
     Required(Event),
@@ -268,7 +269,7 @@ impl ToRustType for EventOpt {
 ///   amount: Float!
 /// }
 /// ```
-#[derive(Clone, Debug, PartialEq)]
+#[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct Event {
     pub name: String,
     pub fields: HashMap<String, RepeatableType>,
@@ -312,7 +313,7 @@ impl Event {
 ///   age: Int
 /// }
 /// ```
-#[derive(Clone, Debug, PartialEq)]
+#[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct CustomType {
     pub name: String,
     pub fields: HashMap<String, RepeatableType>,
@@ -352,7 +353,7 @@ impl CustomType {
 /// - `String`
 /// - `[String]`
 /// - `[String]!`
-#[derive(Clone, Debug, PartialEq)]
+#[derive(Clone, Debug, PartialEq, Serialize)]
 pub enum RepeatableType {
     Single(TypeOpt),
     OptionalArray(TypeOpt),
@@ -403,7 +404,7 @@ impl ToRustType for RepeatableType {
 /// An optional or required type.
 /// - `String`
 /// - `String!`
-#[derive(Clone, Debug, PartialEq)]
+#[derive(Clone, Debug, PartialEq, Serialize)]
 pub enum TypeOpt {
     Optional(TypeRef),
     Required(TypeRef),
@@ -440,7 +441,7 @@ impl ToRustType for TypeOpt {
 /// A type reference of either scalar or custom type.
 /// - `Int`
 /// - `MyType`
-#[derive(Clone, Debug, PartialEq)]
+#[derive(Clone, Debug, PartialEq, Serialize)]
 pub enum TypeRef {
     Scalar(Scalar),
     Custom(CustomType),
@@ -497,7 +498,7 @@ impl ToRustType for TypeRef {
 }
 
 /// An in-built scalar type.
-#[derive(Clone, Copy, Debug, PartialEq)]
+#[derive(Clone, Copy, Debug, PartialEq, Serialize)]
 pub enum Scalar {
     String,
     Int,
