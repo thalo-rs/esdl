@@ -18,7 +18,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "esl"
+name = "esdl"
 version = "0.1.0"
 dependencies = [
  "nom",
