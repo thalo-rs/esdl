@@ -1,10 +1,10 @@
 [package]
-name = "esdl"
+name = "esl"
 version = "0.1.0"
 authors = ["Ari Seyhun <ariseyhun@live.com.au>"]
 edition = "2021"
-description = "Event-Sourcing Schema Definition Language parser"
-repository = "https://github.com/thalo-rs/esdl"
+description = "Event-sourcing Schema Language parser"
+repository = "https://github.com/thalo-rs/esl"
 license = "MIT OR Apache-2.0"
 keywords = ["event-sourcing", "cqrs", "event-driven", "schema"]
 categories = ["data-structures", "development-tools", "rust-patterns"]

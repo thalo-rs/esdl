@@ -1,10 +1,10 @@
-# ESDL
+# ESL
 
-**E**vent **S**ourcing Schema **D**efinition **L**anguage
+**E**vent-sourcing **S**chema **L**anguage
 
 ---
 
-Schema definition language for defining aggregates, commands, events & custom types.
+Schema language for defining aggregates, commands, events & custom types.
 
 Heavily inspired by GraphQL syntax, you can describe aggregates which can be used for codegen in different languages.
 
