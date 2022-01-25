@@ -18,10 +18,14 @@ pub enum Error {
     DuplicateTypeField { ty: String, field: String },
     #[error("event not defined {0}")]
     EventNotDefined(String),
+    #[error(transparent)]
+    Io(#[from] std::io::Error),
     #[error("missing aggregate")]
     MissingAggregate,
     #[error("multiple aggregates")]
     MultipleAggregates,
+    #[error("parse error: {0}")]
+    Parse(String),
     #[error("type not defined {0}")]
     TypeNotDefined(String),
 }

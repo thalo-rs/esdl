@@ -1,3 +1,8 @@
+use std::{
+    collections::HashMap,
+    fs, path,
+    str::{self, FromStr},
+};
 
 use serde::Serialize;
 
@@ -64,6 +69,21 @@ impl Schema {
             events,
             types,
         })
+    }
+
+    pub fn from_file<P: AsRef<path::Path>>(path: P) -> Result<Self, Error> {
+        let content = fs::read_to_string(path)?;
+        Schema::from_str(&content)
+    }
+}
+
+impl str::FromStr for Schema {
+    type Err = Error;
+
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        let parsed_schema = crate::parse(s).map_err(|err| Error::Parse(err.to_string()))?;
+        let schema = Schema::validate_parsed_schema(parsed_schema)?;
+        Ok(schema)
     }
 }
 
