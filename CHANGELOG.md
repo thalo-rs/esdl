@@ -2,6 +2,17 @@
 All notable changes to this project will be documented in this file. See [conventional commits](https://www.conventionalcommits.org/) for commit guidelines.
 
 - - -
+## [0.2.0](https://github.com/thalo-rs/esdl/compare/0.1.0..0.2.0) - 2022-01-25
+#### Features
+- add parsing options for `Schema` - ([921b3c7](https://github.com/thalo-rs/esdl/commit/921b3c77349c5038336e29ff74cbacc6f9ae1242)) - [@tqwewe](https://github.com/tqwewe)
+- add serde derives to schema - ([8914873](https://github.com/thalo-rs/esdl/commit/891487365450b0d845f2bf46f597651baead507a)) - [@tqwewe](https://github.com/tqwewe)
+#### Miscellaneous Chores
+- add CHANGELOG.md - ([5c1abc4](https://github.com/thalo-rs/esdl/commit/5c1abc4035a468ddbb218805466c2ff5a0114488)) - [@tqwewe](https://github.com/tqwewe)
+- add bump books to cog.toml - ([195c86c](https://github.com/thalo-rs/esdl/commit/195c86c6d64bc97232a81d92ec3997448c39c579)) - [@tqwewe](https://github.com/tqwewe)
+- revert "chore: rename to esl" - ([15ad3da](https://github.com/thalo-rs/esdl/commit/15ad3da39ceac64a09d1730ba3faad8d8a42cf0f)) - [@tqwewe](https://github.com/tqwewe)
+- rename to esl - ([b0a3d21](https://github.com/thalo-rs/esdl/commit/b0a3d21a70ff56737d513ffcf58150c0eaf70b43)) - [@tqwewe](https://github.com/tqwewe)
+- - -
+
 ## [0.1.0](https://github.com/thalo-rs/esdl/compare/52dd3bbf938b81e6ff8e5b99b6d84243ecf9fcf8..0.1.0) - 2022-01-25
 #### Bug Fixes
 - event suffix in command events - ([e240973](https://github.com/thalo-rs/esdl/commit/e24097328b5371da9d37115220867388236d1937)) - [@tqwewe](https://github.com/tqwewe)

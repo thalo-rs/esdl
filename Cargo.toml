@@ -1,6 +1,6 @@
 [package]
 name = "esdl"
-version = "0.1.0"
+version = "0.2.0"
 authors = ["Ari Seyhun <ariseyhun@live.com.au>"]
 edition = "2021"
 description = "Event-Sourcing Schema Definition Language parser"
