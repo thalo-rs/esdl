@@ -2,6 +2,13 @@
 All notable changes to this project will be documented in this file. See [conventional commits](https://www.conventionalcommits.org/) for commit guidelines.
 
 - - -
+## [0.2.1](https://github.com/thalo-rs/esdl/compare/0.2.0..0.2.1) - 2022-01-27
+#### Features
+- implement `Serialize` and `Deserialize` on type structs - ([97de0a0](https://github.com/thalo-rs/esdl/commit/97de0a01e097f64f1fcd778d7c6ac735439ee6fb)) - Mike Shearer
+#### Refactoring
+- run cargo fmt - ([d586634](https://github.com/thalo-rs/esdl/commit/d586634bade768fb6c818a79b3d15db3d3fac876)) - [@tqwewe](https://github.com/tqwewe)
+- - -
+
 ## [0.2.0](https://github.com/thalo-rs/esdl/compare/0.1.0..0.2.0) - 2022-01-25
 #### Features
 - add parsing options for `Schema` - ([921b3c7](https://github.com/thalo-rs/esdl/commit/921b3c77349c5038336e29ff74cbacc6f9ae1242)) - [@tqwewe](https://github.com/tqwewe)
