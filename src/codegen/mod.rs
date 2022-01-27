@@ -102,7 +102,10 @@ impl Compiler {
 
     fn compile_schema_types(code: &mut String, types: &HashMap<String, CustomType>) {
         for (type_name, ty) in types {
-            writeln!(code, "#[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]");
+            writeln!(
+                code,
+                "#[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]"
+            );
             writeln!(code, "pub struct {} {{", type_name);
             for (field_name, field) in &ty.fields {
                 writeln!(code, "    pub {}: {},", field_name, field.to_rust_type());
