@@ -1,12 +1,23 @@
 # ESDL
 
-**E**vent **S**ourcing Schema **D**efinition **L**anguage
+**E**vent-sourcing **S**chema **D**efinition **L**anguage
 
 ---
 
 Schema definition language for defining aggregates, commands, events & custom types.
 
 Heavily inspired by GraphQL syntax, you can describe aggregates which can be used for codegen in different languages.
+
+## Code generation
+
+ESDL schemas can be used for code generation.
+
+The [Rust crate](https://crates.io/crates/esdl) currently supports code generation for:
+
+- [Rust](https://docs.rs/esdl/latest/esdl/codegen/rust/struct.RustCompiler.html)
+- [TypeScript]((https://docs.rs/esdl/latest/esdl/codegen/typescript/struct.TypeScriptCompiler.html)
+
+Additional languages may be added in the future. Contributions are welcome!
 
 ## Example
 
@@ -40,13 +51,13 @@ type User {
 
 ### Scalar Types
 
-| Scalar      | Rust Type                                                                                            |
-| ----------- | ---------------------------------------------------------------------------------------------------- |
-| `String`    | [`String`](https://doc.rust-lang.org/stable/std/string/struct.String.html)                           |
-| `Int`       | [`i64`](https://doc.rust-lang.org/stable/std/primitive.i64.html)                                     |
-| `Float`     | [`f64`](https://doc.rust-lang.org/stable/std/primitive.f64.html)                                     |
-| `Bool`      | [`bool`](https://doc.rust-lang.org/stable/std/primitive.bool.html)                                   |
-| `Timestamp` | [`chrono::DateTime<chrono::FixedOffset>`](https://docs.rs/chrono/latest/chrono/struct.DateTime.html) |
+| Scalar      | Rust Type                                                                                            | TypeScript Type                                                                                                          |
+| ----------- | ---------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------ |
+| `String`    | [`String`](https://doc.rust-lang.org/stable/std/string/struct.String.html)                           | [`string`](https://www.typescriptlang.org/docs/handbook/2/everyday-types.html#the-primitives-string-number-and-boolean)  |
+| `Int`       | [`i64`](https://doc.rust-lang.org/stable/std/primitive.i64.html)                                     | [`number`](https://www.typescriptlang.org/docs/handbook/2/everyday-types.html#the-primitives-string-number-and-boolean)  |
+| `Float`     | [`f64`](https://doc.rust-lang.org/stable/std/primitive.f64.html)                                     | [`number`](https://www.typescriptlang.org/docs/handbook/2/everyday-types.html#the-primitives-string-number-and-boolean)  |
+| `Bool`      | [`bool`](https://doc.rust-lang.org/stable/std/primitive.bool.html)                                   | [`boolean`](https://www.typescriptlang.org/docs/handbook/2/everyday-types.html#the-primitives-string-number-and-boolean) |
+| `Timestamp` | [`chrono::DateTime<chrono::FixedOffset>`](https://docs.rs/chrono/latest/chrono/struct.DateTime.html) | [`Date`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/Date)                     |
 
 ### Optional & Required
 
