@@ -63,27 +63,28 @@ type User {
 
 Types can be marked as required by adding the `!` suffix.
 
-| Type     | Syntax   | Example   |
-| -------- | -------- | --------- |
-| Optional | _(none)_ | `String`  |
-| Required | `!`      | `String!` |
+| Type     | Syntax | Example   |
+| -------- | ------ | --------- |
+| Optional | `T`    | `String`  |
+| Required | `T!`   | `String!` |
 
 ### Repeating Types
 
 Types can be repeated by wrapping them in `[]`.
 
-| Type   | Syntax    | Example    |
-| ------ | --------- | ---------- |
-| Single | _(none)_  | `String`   |
-| Array  | `[`...`]` | `[String]` |
+| Type   | Syntax | Example    |
+| ------ | ------ | ---------- |
+| Single | `T`    | `String`   |
+| Array  | `[T]`  | `[String]` |
 
 Remember, we can mark types as required, even in arrays.
 
-| Type                 | Syntax     | Example     |
-| -------------------- | ---------- | ----------- |
-| Optional Array       | `[`...`]`  | `[String]`  |
-| Required Array       | `[`...`]!` | `[String]!` |
-| Required Array Items | `[`...`!]` | `[String!]` |
+| Type                 | Syntax  | Example      |
+| -------------------- | ------- | ------------ |
+| Optional Array       | `[T]`   | `[String]`   |
+| Required Array       | `[T]!`  | `[String]!`  |
+| Required Array Items | `[T!]`  | `[String!]`  |
+| Required Array Items | `[T!]!` | `[String!]!` |
 
 ---
 
