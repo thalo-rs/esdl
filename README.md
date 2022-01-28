@@ -51,13 +51,13 @@ type User {
 
 ### Scalar Types
 
-| Scalar      | Rust Type                                                                                            | TypeScript Type                                                                                                          |
-| ----------- | ---------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------ |
-| `String`    | [`String`](https://doc.rust-lang.org/stable/std/string/struct.String.html)                           | [`string`](https://www.typescriptlang.org/docs/handbook/2/everyday-types.html#the-primitives-string-number-and-boolean)  |
-| `Int`       | [`i64`](https://doc.rust-lang.org/stable/std/primitive.i64.html)                                     | [`number`](https://www.typescriptlang.org/docs/handbook/2/everyday-types.html#the-primitives-string-number-and-boolean)  |
-| `Float`     | [`f64`](https://doc.rust-lang.org/stable/std/primitive.f64.html)                                     | [`number`](https://www.typescriptlang.org/docs/handbook/2/everyday-types.html#the-primitives-string-number-and-boolean)  |
-| `Bool`      | [`bool`](https://doc.rust-lang.org/stable/std/primitive.bool.html)                                   | [`boolean`](https://www.typescriptlang.org/docs/handbook/2/everyday-types.html#the-primitives-string-number-and-boolean) |
-| `Timestamp` | [`chrono::DateTime<chrono::FixedOffset>`](https://docs.rs/chrono/latest/chrono/struct.DateTime.html) | [`Date`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/Date)                     |
+| Scalar      | Rust Type                                                                            | TypeScript Type                                                                                                          |
+| ----------- | ------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------ |
+| `String`    | [`String`](https://doc.rust-lang.org/stable/std/string/struct.String.html)           | [`string`](https://www.typescriptlang.org/docs/handbook/2/everyday-types.html#the-primitives-string-number-and-boolean)  |
+| `Int`       | [`i64`](https://doc.rust-lang.org/stable/std/primitive.i64.html)                     | [`number`](https://www.typescriptlang.org/docs/handbook/2/everyday-types.html#the-primitives-string-number-and-boolean)  |
+| `Float`     | [`f64`](https://doc.rust-lang.org/stable/std/primitive.f64.html)                     | [`number`](https://www.typescriptlang.org/docs/handbook/2/everyday-types.html#the-primitives-string-number-and-boolean)  |
+| `Bool`      | [`bool`](https://doc.rust-lang.org/stable/std/primitive.bool.html)                   | [`boolean`](https://www.typescriptlang.org/docs/handbook/2/everyday-types.html#the-primitives-string-number-and-boolean) |
+| `Timestamp` | [`DateTime<FixedOffset>`](https://docs.rs/chrono/latest/chrono/struct.DateTime.html) | [`Date`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/Date)                     |
 
 ### Optional & Required
 
