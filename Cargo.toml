@@ -3,11 +3,17 @@ name = "esdl"
 version = "0.2.1"
 authors = ["Ari Seyhun <ariseyhun@live.com.au>"]
 edition = "2021"
-description = "Event-Sourcing Schema Definition Language parser"
+description = "Event-sourcing Schema Definition Language parser and code generator"
 repository = "https://github.com/thalo-rs/esdl"
 license = "MIT OR Apache-2.0"
-keywords = ["event-sourcing", "cqrs", "event-driven", "schema"]
-categories = ["data-structures", "development-tools", "rust-patterns"]
+keywords = ["schema", "esdl", "codegen", "event-sourcing", "cqrs"]
+categories = [
+  "compilers",
+  "data-structures",
+  "development-tools::build-utils",
+  "parsing",
+  "encoding",
+]
 
 [dependencies]
 nom = { version = "7.1", features = ["alloc"] }
@@ -17,4 +23,9 @@ thiserror = "1.0"
 
 [features]
 default = []
-codegen = []
+codegen-rust = []
+codegen-typescript = []
+
+[package.metadata.docs.rs]
+all-features = true
+rustdoc-args = ["--cfg", "docsrs"]
