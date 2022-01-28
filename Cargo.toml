@@ -17,4 +17,9 @@ thiserror = "1.0"
 
 [features]
 default = []
-codegen = []
+codegen-rust = []
+codegen-typescript = []
+
+[package.metadata.docs.rs]
+all-features = true
+rustdoc-args = ["--cfg", "docsrs"]
