@@ -8,9 +8,6 @@ use serde::Serialize;
 
 pub use error::Error;
 
-#[cfg(feature = "codegen")]
-use crate::codegen::ToRustType;
-
 mod error;
 
 /// Schema definition including aggregate, commands, events & custom types.
@@ -222,23 +219,6 @@ impl CommandEvents {
     }
 }
 
-#[cfg(feature = "codegen")]
-impl ToRustType for CommandEvents {
-    fn to_rust_type(&self) -> String {
-        match self {
-            CommandEvents::Single(event_opt) => event_opt.to_rust_type(),
-            CommandEvents::Tuple(events) => format!(
-                "({})",
-                events
-                    .iter()
-                    .map(|event| event.to_rust_type())
-                    .collect::<Vec<_>>()
-                    .join(", ")
-            ),
-        }
-    }
-}
-
 /// Optional or required event from a command.
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub enum EventOpt {
@@ -271,17 +251,6 @@ impl EventOpt {
         }
     }
 }
-
-#[cfg(feature = "codegen")]
-impl ToRustType for EventOpt {
-    fn to_rust_type(&self) -> String {
-        match self {
-            EventOpt::Optional(event) => format!("std::option::Option<{}Event>", event.name),
-            EventOpt::Required(event) => format!("{}Event", event.name),
-        }
-    }
-}
-
 /// Event definition with name and fields.
 ///
 /// ```text
@@ -405,22 +374,6 @@ impl RepeatableType {
     }
 }
 
-#[cfg(feature = "codegen")]
-impl ToRustType for RepeatableType {
-    fn to_rust_type(&self) -> String {
-        match self {
-            RepeatableType::Single(type_opt) => type_opt.to_rust_type(),
-            RepeatableType::OptionalArray(type_opt) => format!(
-                "std::option::Option<std::vec::Vec<{}>>",
-                type_opt.to_rust_type()
-            ),
-            RepeatableType::RequiredArray(type_opt) => {
-                format!("std::vec::Vec<{}>", type_opt.to_rust_type())
-            }
-        }
-    }
-}
-
 /// An optional or required type.
 /// - `String`
 /// - `String!`
@@ -442,18 +395,6 @@ impl TypeOpt {
             crate::parser::types::OptionalOrRequiredType::Required(type_ref) => Ok(
                 TypeOpt::Required(TypeRef::from_scalar_or_user_type(custom_types, type_ref)?),
             ),
-        }
-    }
-}
-
-#[cfg(feature = "codegen")]
-impl ToRustType for TypeOpt {
-    fn to_rust_type(&self) -> String {
-        match self {
-            TypeOpt::Optional(type_ref) => {
-                format!("std::option::Option<{}>", type_ref.to_rust_type())
-            }
-            TypeOpt::Required(type_ref) => type_ref.to_rust_type(),
         }
     }
 }
@@ -507,16 +448,6 @@ impl TypeRef {
     }
 }
 
-#[cfg(feature = "codegen")]
-impl ToRustType for TypeRef {
-    fn to_rust_type(&self) -> String {
-        match self {
-            TypeRef::Scalar(scalar) => scalar.to_rust_type(),
-            TypeRef::Custom(custom_type) => custom_type.name.clone(),
-        }
-    }
-}
-
 /// An in-built scalar type.
 #[derive(Clone, Copy, Debug, PartialEq, Serialize)]
 pub enum Scalar {
@@ -525,19 +456,6 @@ pub enum Scalar {
     Float,
     Bool,
     Timestamp,
-}
-
-#[cfg(feature = "codegen")]
-impl ToRustType for Scalar {
-    fn to_rust_type(&self) -> String {
-        match self {
-            Scalar::String => "String".to_string(),
-            Scalar::Int => "i64".to_string(),
-            Scalar::Float => "f64".to_string(),
-            Scalar::Bool => "bool".to_string(),
-            Scalar::Timestamp => "chrono::DateTime<chrono::FixedOffset>".to_string(),
-        }
-    }
 }
 
 impl From<crate::parser::types::Scalar> for Scalar {
