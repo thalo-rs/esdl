@@ -1,6 +1,6 @@
 [package]
 name = "esdl"
-version = "0.2.1"
+version = "0.3.0"
 authors = ["Ari Seyhun <ariseyhun@live.com.au>"]
 edition = "2021"
 description = "Event-sourcing Schema Definition Language parser and code generator"
@@ -15,6 +15,10 @@ categories = [
   "encoding",
 ]
 
+[package.metadata.docs.rs]
+all-features = true
+rustdoc-args = ["--cfg", "docsrs"]
+
 [dependencies]
 nom = { version = "7.1", features = ["alloc"] }
 nom-supreme = "0.6"
@@ -25,7 +29,3 @@ thiserror = "1.0"
 default = []
 codegen-rust = []
 codegen-typescript = []
-
-[package.metadata.docs.rs]
-all-features = true
-rustdoc-args = ["--cfg", "docsrs"]

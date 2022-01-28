@@ -2,6 +2,21 @@
 All notable changes to this project will be documented in this file. See [conventional commits](https://www.conventionalcommits.org/) for commit guidelines.
 
 - - -
+## [0.3.0](https://github.com/thalo-rs/esdl/compare/0.2.1..0.3.0) - 2022-01-28
+#### Documentation
+- simplify chrono `DateTime` - ([a195013](https://github.com/thalo-rs/esdl/commit/a1950133138154b17548db0257c574379381c524)) - [@tqwewe](https://github.com/tqwewe)
+- clarify types in README.md - ([15149fc](https://github.com/thalo-rs/esdl/commit/15149fcacb6ec03ee19aae64887614afaa20a273)) - [@tqwewe](https://github.com/tqwewe)
+- add TypeScript types and links to README.md - ([cc68770](https://github.com/thalo-rs/esdl/commit/cc68770d13369e1cf51313b44cd12fb37128bfea)) - [@tqwewe](https://github.com/tqwewe)
+- add TypeScript types and links to README.md - ([727d5b1](https://github.com/thalo-rs/esdl/commit/727d5b1940e1a2d01aa2906ccdf6f0915c1acb6b)) - [@tqwewe](https://github.com/tqwewe)
+#### Features
+- add support for TypeScript codegen - ([0cd7e99](https://github.com/thalo-rs/esdl/commit/0cd7e99256f13ab699efd8c12f06cf318e2cfc97)) - [@tqwewe](https://github.com/tqwewe)
+#### Miscellaneous Chores
+- merge pull request #2 from thalo-rs/feat/codegen-ts - ([3a26edd](https://github.com/thalo-rs/esdl/commit/3a26eddc1ed327dac6544ebafc6e82abae833cc7)) - [@tqwewe](https://github.com/tqwewe)
+- add keywords and categories to Cargo.toml - ([2ac41c0](https://github.com/thalo-rs/esdl/commit/2ac41c03a9b187ed17938177d925a5945a3d9b2b)) - [@tqwewe](https://github.com/tqwewe)
+#### Refactoring
+- move rust codegen into separate module - ([fd41f01](https://github.com/thalo-rs/esdl/commit/fd41f01ba34342797c3d0b81b3627a9db8e0d4f1)) - [@tqwewe](https://github.com/tqwewe)
+- - -
+
 ## [0.2.1](https://github.com/thalo-rs/esdl/compare/0.2.0..0.2.1) - 2022-01-27
 #### Features
 - implement `Serialize` and `Deserialize` on type structs - ([97de0a0](https://github.com/thalo-rs/esdl/commit/97de0a01e097f64f1fcd778d7c6ac735439ee6fb)) - Mike Shearer
