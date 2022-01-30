@@ -26,6 +26,8 @@ pub mod typescript;
 pub struct Compiler<C> {
     compiler: C,
     schemas: Vec<Schema>,
+    #[cfg(feature = "wasm")]
+    wasm: bool,
 }
 
 impl<C: Compile> Compiler<C> {
@@ -34,6 +36,8 @@ impl<C: Compile> Compiler<C> {
         Compiler {
             compiler,
             schemas: Vec::new(),
+            #[cfg(feature = "wasm")]
+            wasm: false,
         }
     }
 
@@ -56,13 +60,24 @@ impl<C: Compile> Compiler<C> {
         Ok(self.add_schema(schema))
     }
 
+    #[cfg(feature = "wasm")]
+    pub fn wasm(mut self, enabled: bool) -> Self {
+        self.wasm = enabled;
+        self
+    }
+
     /// Compile schemas into Rust code and save in OUT_DIR.
     pub fn compile(self) -> Result<(), Error> {
         let out_dir = env::var("OUT_DIR").unwrap();
 
         let compiler = &self.compiler;
         for schema in self.schemas {
-            let code = compile_schema(compiler, &schema);
+            let code = compile_schema(
+                compiler,
+                &schema,
+                #[cfg(feature = "wasm")]
+                self.wasm,
+            );
             fs::write(format!("{}/{}.rs", out_dir, schema.aggregate.name), code)?;
         }
 
@@ -77,7 +92,12 @@ impl<C: Compile> Compiler<C> {
 
         let compiler = &self.compiler;
         for schema in self.schemas {
-            let code = compile_schema(compiler, &schema);
+            let code = compile_schema(
+                compiler,
+                &schema,
+                #[cfg(feature = "wasm")]
+                self.wasm,
+            );
             codes.insert(schema.aggregate.name, code);
         }
 
@@ -85,10 +105,19 @@ impl<C: Compile> Compiler<C> {
     }
 }
 
-pub fn compile_schema<C: Compile>(compiler: &C, schema: &Schema) -> String {
+pub fn compile_schema<C: Compile>(
+    compiler: &C,
+    schema: &Schema,
+    #[cfg(feature = "wasm")] wasm: bool,
+) -> String {
     let mut code = String::new();
 
-    compiler.compile_before(&mut code);
+    compiler.compile_before(&mut code, schema);
+
+    #[cfg(feature = "wasm")]
+    if wasm {
+        compiler.compile_wasm(&mut code, schema);
+    }
 
     compiler.compile_schema_types(&mut code, &schema.types);
 
@@ -100,14 +129,17 @@ pub fn compile_schema<C: Compile>(compiler: &C, schema: &Schema) -> String {
         &schema.aggregate.commands,
     );
 
-    compiler.compile_after(&mut code);
+    compiler.compile_after(&mut code, schema);
 
     code
 }
 
 pub trait Compile {
-    fn compile_before(&self, _code: &mut String) {}
-    fn compile_after(&self, _code: &mut String) {}
+    fn compile_before(&self, _code: &mut String, _schema: &Schema) {}
+    fn compile_after(&self, _code: &mut String, _schema: &Schema) {}
+
+    #[cfg(feature = "wasm")]
+    fn compile_wasm(&self, _code: &mut String, _schema: &Schema) {}
 
     fn compile_schema_types(&self, code: &mut String, types: &HashMap<String, CustomType>);
 

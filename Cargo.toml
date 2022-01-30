@@ -27,5 +27,7 @@ serde = { version = "1.0", features = ["derive"] }
 thiserror = "1.0"
 
 [features]
+default = []
 codegen-rust = ["heck"]
 codegen-typescript = []
+wasm = []
