@@ -1,0 +1,20 @@
+// Errors that can occur
+variant error {
+  command(list<u8>),
+  deserialize-state,
+  deserialize-event,
+  deserialize-command,
+  serialize-state,
+}
+
+// Creates a new instance
+// Returns state
+new-instance: function(id: string) -> expected<list<u8>, error>
+
+// Takes state, event
+// Returns new state
+apply-events: function(state: list<u8>, event: list<list<u8>>) -> expected<list<u8>, error>
+
+// Takes state, command
+// Returns list of events
+handle-command: function(state: list<u8>, command: list<u8>) -> expected<list<list<u8>>, error>
