@@ -2,6 +2,19 @@
 All notable changes to this project will be documented in this file. See [conventional commits](https://www.conventionalcommits.org/) for commit guidelines.
 
 - - -
+## [0.4.0](https://github.com/thalo-rs/esdl/compare/0.3.0..0.4.0) - 2022-01-30
+#### Bug Fixes
+- codege-typescript `compile_before` implementation - ([3811495](https://github.com/thalo-rs/esdl/commit/3811495a32bda465ad5579b8d23650577bf10c6d)) - [@tqwewe](https://github.com/tqwewe)
+#### Documentation
+- **(examples/bank-account-wasm)** add bank-account-wasm example - ([694a050](https://github.com/thalo-rs/esdl/commit/694a0501399f2103023ef15ee68b52e520d4fea3)) - [@tqwewe](https://github.com/tqwewe)
+#### Features
+- add wasm feature flag and code generation - ([42ab3f9](https://github.com/thalo-rs/esdl/commit/42ab3f91f3177133462aeaead522a33f118021c7)) - [@tqwewe](https://github.com/tqwewe)
+- add rust codegen command enum - ([0c53833](https://github.com/thalo-rs/esdl/commit/0c5383372973c4795bcfad12863af972c8cf484f)) - [@tqwewe](https://github.com/tqwewe)
+- serde rename codegen event enum - ([f53e950](https://github.com/thalo-rs/esdl/commit/f53e950064e6f41b803ffe59f32d61f4309fbe25)) - [@tqwewe](https://github.com/tqwewe)
+#### Miscellaneous Chores
+- Cargo.lock update - ([5cbc0cf](https://github.com/thalo-rs/esdl/commit/5cbc0cf2c01abfbfd020406e46e79daed999f405)) - [@tqwewe](https://github.com/tqwewe)
+- - -
+
 ## [0.3.0](https://github.com/thalo-rs/esdl/compare/0.2.1..0.3.0) - 2022-01-28
 #### Documentation
 - simplify chrono `DateTime` - ([a195013](https://github.com/thalo-rs/esdl/commit/a1950133138154b17548db0257c574379381c524)) - [@tqwewe](https://github.com/tqwewe)
