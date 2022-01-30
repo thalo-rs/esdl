@@ -61,6 +61,7 @@ impl Compile for RustCompiler {
             code,
             "#[derive(Clone, Debug, serde::Deserialize, thalo::event::EventType, PartialEq, serde::Serialize)]"
         );
+        writeln!(code, r##"#[serde(tag = "event", content = "data")]"##);
         writeln!(code, "pub enum {}Event {{", name);
 
         for event_name in events.keys() {
