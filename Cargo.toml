@@ -20,12 +20,12 @@ all-features = true
 rustdoc-args = ["--cfg", "docsrs"]
 
 [dependencies]
+heck = { version = "0.4", optional = true }
 nom = { version = "7.1", features = ["alloc"] }
 nom-supreme = "0.6"
 serde = { version = "1.0", features = ["derive"] }
 thiserror = "1.0"
 
 [features]
-default = []
-codegen-rust = []
+codegen-rust = ["heck"]
 codegen-typescript = []

@@ -1,5 +1,7 @@
 use std::{collections::HashMap, fmt::Write};
 
+use heck::ToUpperCamelCase;
+
 use crate::schema::{
     Command, CommandEvents, CustomType, Event, EventOpt, RepeatableType, Scalar, TypeOpt, TypeRef,
 };
@@ -91,10 +93,26 @@ impl Compile for RustCompiler {
         name: &str,
         commands: &HashMap<String, Command>,
     ) {
+        writeln!(
+            code,
+            "#[derive(Clone, Debug, serde::Deserialize, PartialEq, serde::Serialize)]"
+        );
+        writeln!(code, r##"#[serde(tag = "command", content = "params")]"##);
+        writeln!(code, "pub enum {}CommandEnum {{", name);
+        for (command_name, command) in commands {
+            let command_name_camel_case = command_name.to_upper_camel_case();
+            writeln!(code, r##"    #[serde(rename = "{}")]"##, command_name);
+            writeln!(code, "    {} {{", command_name_camel_case);
+            for param in &command.params {
+                writeln!(code, "        {}: {},", param.name, param.ty.to_rust_type());
+            }
+            writeln!(code, "    }},");
+        }
+        writeln!(code, "}}");
+        writeln!(code);
         writeln!(code, "pub trait {}Command {{", name);
         writeln!(code, "    type Error;");
         writeln!(code);
-
         for (command_name, command) in commands {
             write!(code, "    fn {}(&self", command_name);
 
