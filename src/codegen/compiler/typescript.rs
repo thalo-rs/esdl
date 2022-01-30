@@ -1,7 +1,8 @@
 use std::{collections::HashMap, fmt::Write};
 
 use crate::schema::{
-    Command, CommandEvents, CustomType, Event, EventOpt, RepeatableType, Scalar, TypeOpt, TypeRef,
+    Command, CommandEvents, CustomType, Event, EventOpt, RepeatableType, Scalar, Schema, TypeOpt,
+    TypeRef,
 };
 
 use super::Compile;
@@ -69,7 +70,7 @@ use super::Compile;
 pub struct TypeScriptCompiler;
 
 impl Compile for TypeScriptCompiler {
-    fn compile_before(&self, code: &mut String) {
+    fn compile_before(&self, code: &mut String, _schema: &Schema) {
         writeln!(code, "import type {{ Event }} from 'thalo';");
         writeln!(code);
     }
