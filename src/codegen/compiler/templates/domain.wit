@@ -1,0 +1,11 @@
+variant error {
+  command(list<u8>),
+  deserialize-event,
+  deserialize-command,
+}
+
+resource aggregate {
+  static new: function(id: string) -> aggregate
+  apply-events: function(events: list<list<u8>>) -> expected<_, error>
+  handle-command: function(command: list<u8>) -> expected<list<list<u8>>, error>
+}

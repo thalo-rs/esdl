@@ -9,7 +9,11 @@
 
 pub use parser::parse;
 
-#[cfg(any(feature = "codegen-rust", feature = "codegen-typescript"))]
+#[cfg(any(
+    feature = "codegen-rust",
+    feature = "codegen-rust-wasm",
+    feature = "codegen-typescript",
+))]
 pub mod codegen;
 pub(crate) mod parser;
 pub mod schema;
