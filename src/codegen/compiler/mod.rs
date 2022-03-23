@@ -2,11 +2,11 @@
 
 use std::{collections::HashMap, env, fs, path::Path};
 
-use crate::schema::{Command, CustomType, Event, Schema};
+use crate::schema::Schema;
 
 use super::error::Error;
 
-#[cfg(feature = "codegen-rust")]
+#[cfg(any(feature = "codegen-rust", feature = "codegen-rust-wasm"))]
 pub mod rust;
 #[cfg(feature = "codegen-typescript")]
 pub mod typescript;
@@ -26,8 +26,6 @@ pub mod typescript;
 pub struct Compiler<C> {
     compiler: C,
     schemas: Vec<Schema>,
-    #[cfg(feature = "wasm")]
-    wasm: bool,
 }
 
 impl<C: Compile> Compiler<C> {
@@ -36,8 +34,6 @@ impl<C: Compile> Compiler<C> {
         Compiler {
             compiler,
             schemas: Vec::new(),
-            #[cfg(feature = "wasm")]
-            wasm: false,
         }
     }
 
@@ -60,10 +56,15 @@ impl<C: Compile> Compiler<C> {
         Ok(self.add_schema(schema))
     }
 
-    #[cfg(feature = "wasm")]
-    pub fn wasm(mut self, enabled: bool) -> Self {
-        self.wasm = enabled;
-        self
+    /// Compiles wasm code.
+    pub fn with_wasm(self) -> Compiler<<C as IntoWasmCompiler>::Compiler>
+    where
+        C: IntoWasmCompiler,
+    {
+        Compiler {
+            compiler: self.compiler.into_wasm_compiler(),
+            schemas: self.schemas,
+        }
     }
 
     /// Compile schemas into Rust code and save in OUT_DIR.
@@ -72,12 +73,7 @@ impl<C: Compile> Compiler<C> {
 
         let compiler = &self.compiler;
         for schema in self.schemas {
-            let code = compile_schema(
-                compiler,
-                &schema,
-                #[cfg(feature = "wasm")]
-                self.wasm,
-            );
+            let code = compiler.compile_schema(&schema);
             fs::write(format!("{}/{}.rs", out_dir, schema.aggregate.name), code)?;
         }
 
@@ -92,12 +88,7 @@ impl<C: Compile> Compiler<C> {
 
         let compiler = &self.compiler;
         for schema in self.schemas {
-            let code = compile_schema(
-                compiler,
-                &schema,
-                #[cfg(feature = "wasm")]
-                self.wasm,
-            );
+            let code = compiler.compile_schema(&schema);
             codes.insert(schema.aggregate.name, code);
         }
 
@@ -105,50 +96,12 @@ impl<C: Compile> Compiler<C> {
     }
 }
 
-pub fn compile_schema<C: Compile>(
-    compiler: &C,
-    schema: &Schema,
-    #[cfg(feature = "wasm")] wasm: bool,
-) -> String {
-    let mut code = String::new();
-
-    compiler.compile_before(&mut code, schema);
-
-    #[cfg(feature = "wasm")]
-    if wasm {
-        compiler.compile_wasm(&mut code, schema);
-    }
-
-    compiler.compile_schema_types(&mut code, &schema.types);
-
-    compiler.compile_schema_events(&mut code, &schema.aggregate.name, &schema.events);
-
-    compiler.compile_schema_commands(
-        &mut code,
-        &schema.aggregate.name,
-        &schema.aggregate.commands,
-    );
-
-    compiler.compile_after(&mut code, schema);
-
-    code
+pub trait Compile {
+    fn compile_schema(&self, schema: &Schema) -> String;
 }
 
-pub trait Compile {
-    fn compile_before(&self, _code: &mut String, _schema: &Schema) {}
-    fn compile_after(&self, _code: &mut String, _schema: &Schema) {}
+pub trait IntoWasmCompiler {
+    type Compiler: Compile;
 
-    #[cfg(feature = "wasm")]
-    fn compile_wasm(&self, _code: &mut String, _schema: &Schema) {}
-
-    fn compile_schema_types(&self, code: &mut String, types: &HashMap<String, CustomType>);
-
-    fn compile_schema_events(&self, code: &mut String, name: &str, events: &HashMap<String, Event>);
-
-    fn compile_schema_commands(
-        &self,
-        code: &mut String,
-        name: &str,
-        commands: &HashMap<String, Command>,
-    );
+    fn into_wasm_compiler(self) -> Self::Compiler;
 }
