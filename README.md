@@ -23,10 +23,10 @@ Additional languages may be added in the future. Contributions are welcome!
 
 ```
 aggregate BankAccount {
-  open_account(initial_balance: Float!) OpenedAccount!
-  deposit_funds(amount: Float!): ReceivedFunds!
-  withdraw_funds(amount: Float!): SentFunds!
-  transact(amount: Float!, user: User!) (SentFunds | ReceivedFunds)
+  open_account(initial_balance: Float!) -> OpenedAccount!
+  deposit_funds(amount: Float!) -> ReceivedFunds!
+  withdraw_funds(amount: Float!) -> SentFunds!
+  send_funds(amount: Float!, user: User!) -> (SentFunds | ReceivedFunds)
 }
 
 event OpenedAccount {

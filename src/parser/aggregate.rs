@@ -48,7 +48,7 @@ pub fn parse_command(input: Span) -> IResult<Span, Command<'_>> {
     let ident_params_parser = pair(
         separated_pair(ident_parser, multispace0, params_parser),
         preceded(
-            tuple((multispace0, tag(":"), multispace0)),
+            tuple((multispace0, tag("->"), multispace0)),
             parse_return_type,
         ),
     );

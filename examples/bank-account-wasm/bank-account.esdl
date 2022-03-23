@@ -1,7 +1,7 @@
 aggregate BankAccount {
-  open_account(initial_balance: Float!): OpenedAccount!
-  deposit_funds(amount: Float!): DepositedFunds!
-  withdraw_funds(amount: Float!): WithdrewFunds!
+  open_account(initial_balance: Float!) -> OpenedAccount!
+  deposit_funds(amount: Float!) -> DepositedFunds!
+  withdraw_funds(amount: Float!) -> WithdrewFunds!
 }
 
 event OpenedAccount {
