@@ -1,6 +1,5 @@
 #![doc = include_str!("../README.md")]
 
-//!
 //! ## Code generation
 //!
 //! For usage with code generation, see [codegen].
@@ -13,6 +12,8 @@ pub use parser::parse;
     feature = "codegen-rust",
     feature = "codegen-rust-wasm",
     feature = "codegen-typescript",
+    feature = "codegen-wit"
+))]
 pub mod codegen;
 pub(crate) mod parser;
 pub mod schema;

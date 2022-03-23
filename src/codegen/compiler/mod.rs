@@ -10,6 +10,8 @@ use super::error::Error;
 pub mod rust;
 #[cfg(feature = "codegen-typescript")]
 pub mod typescript;
+#[cfg(feature = "codegen-wit")]
+pub mod wit;
 
 /// Compile schemas into Rust code.
 ///
