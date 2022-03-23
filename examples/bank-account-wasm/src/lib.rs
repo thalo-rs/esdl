@@ -1,4 +1,3 @@
-use serde::{Deserialize, Serialize};
 use thalo::{
     aggregate::{Aggregate, TypeId},
     include_aggregate,
@@ -6,7 +5,7 @@ use thalo::{
 
 include_aggregate!("BankAccount");
 
-#[derive(Aggregate, Clone, Debug, Default, Deserialize, PartialEq, Serialize, TypeId)]
+#[derive(Aggregate, Default, TypeId)]
 pub struct BankAccount {
     id: String,
     opened: bool,
@@ -75,7 +74,7 @@ fn apply(bank_account: &mut BankAccount, event: BankAccountEvent) {
     }
 }
 
-#[derive(Clone, Copy, Debug, thiserror::Error, PartialEq)]
+#[derive(Debug, thiserror::Error)]
 pub enum Error {
     #[error("account already opened")]
     AccountAlreadyOpened,
