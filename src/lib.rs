@@ -13,6 +13,7 @@ pub use parser::parse;
     feature = "codegen-rust",
     feature = "codegen-rust-wasm",
     feature = "codegen-typescript",
+))]
 pub mod codegen;
 pub(crate) mod parser;
 pub mod schema;
