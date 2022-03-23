@@ -27,7 +27,7 @@ pub enum Type<'i> {
     Single(OptionalOrRequiredType<'i>),
     Array {
         inner: OptionalOrRequiredType<'i>,
-        required: bool,
+        optional: bool,
     },
 }
 
@@ -40,11 +40,11 @@ pub fn parse_type(input: Span) -> IResult<Span, Type<'_>> {
                 parse_optional_or_required_type,
                 pair(space0, tag("]")),
             ),
-            opt(char('!')),
+            opt(char('?')),
         ),
-        |(ty, required)| Type::Array {
+        |(ty, optional)| Type::Array {
             inner: ty,
-            required: required.is_some(),
+            optional: optional.is_some(),
         },
     );
     alt((single_type_parser, array_type_parser))(input)
@@ -73,12 +73,12 @@ pub enum OptionalOrRequiredType<'i> {
 
 pub fn parse_optional_or_required_type(input: Span) -> IResult<Span, OptionalOrRequiredType<'_>> {
     let mut optional_or_required_parser = map(
-        pair(parse_scalar_or_user_type, opt(char('!'))),
-        |(scalar_or_user_type, required)| {
-            if required.is_some() {
-                OptionalOrRequiredType::Required(scalar_or_user_type)
-            } else {
+        pair(parse_scalar_or_user_type, opt(char('?'))),
+        |(scalar_or_user_type, optional)| {
+            if optional.is_some() {
                 OptionalOrRequiredType::Optional(scalar_or_user_type)
+            } else {
+                OptionalOrRequiredType::Required(scalar_or_user_type)
             }
         },
     );
@@ -124,171 +124,3 @@ pub fn parse_scalar(input: Span) -> IResult<Span, Scalar> {
         parse_scalar_timestamp,
     ))(input)
 }
-
-// #[cfg(test)]
-// mod tests {
-//     use super::{parse_type, OptionalOrRequiredType, Scalar, ScalarOrUserType, Type};
-
-//     #[test]
-//     fn it_parses_type() {
-//         assert_eq!(
-//             parse_type("String").unwrap(),
-//             (
-//                 "",
-//                 Type::Single(OptionalOrRequiredType::Optional(ScalarOrUserType::Scalar(
-//                     Scalar::String
-//                 )))
-//             )
-//         );
-//         assert_eq!(
-//             parse_type("Int").unwrap(),
-//             (
-//                 "",
-//                 Type::Single(OptionalOrRequiredType::Optional(ScalarOrUserType::Scalar(
-//                     Scalar::Int
-//                 )))
-//             )
-//         );
-//         assert_eq!(
-//             parse_type("Float").unwrap(),
-//             (
-//                 "",
-//                 Type::Single(OptionalOrRequiredType::Optional(ScalarOrUserType::Scalar(
-//                     Scalar::Float
-//                 )))
-//             )
-//         );
-//         assert_eq!(
-//             parse_type("Bool").unwrap(),
-//             (
-//                 "",
-//                 Type::Single(OptionalOrRequiredType::Optional(ScalarOrUserType::Scalar(
-//                     Scalar::Bool
-//                 )))
-//             )
-//         );
-//         assert_eq!(
-//             parse_type("MyType").unwrap(),
-//             (
-//                 "",
-//                 Type::Single(OptionalOrRequiredType::Optional(
-//                     ScalarOrUserType::UserDefined("MyType")
-//                 ))
-//             )
-//         );
-//         assert_eq!(
-//             parse_type("String!").unwrap(),
-//             (
-//                 "",
-//                 Type::Single(OptionalOrRequiredType::Required(ScalarOrUserType::Scalar(
-//                     Scalar::String
-//                 )))
-//             )
-//         );
-//         assert_eq!(
-//             parse_type("MyType!").unwrap(),
-//             (
-//                 "",
-//                 Type::Single(OptionalOrRequiredType::Required(
-//                     ScalarOrUserType::UserDefined("MyType")
-//                 ))
-//             )
-//         );
-//         assert_eq!(
-//             parse_type("[String]").unwrap(),
-//             (
-//                 "",
-//                 Type::Array {
-//                     inner: OptionalOrRequiredType::Optional(ScalarOrUserType::Scalar(
-//                         Scalar::String
-//                     )),
-//                     required: false
-//                 }
-//             )
-//         );
-//         assert_eq!(
-//             parse_type("[String]!").unwrap(),
-//             (
-//                 "",
-//                 Type::Array {
-//                     inner: OptionalOrRequiredType::Optional(ScalarOrUserType::Scalar(
-//                         Scalar::String
-//                     )),
-//                     required: true
-//                 }
-//             )
-//         );
-//         assert_eq!(
-//             parse_type("[String!]").unwrap(),
-//             (
-//                 "",
-//                 Type::Array {
-//                     inner: OptionalOrRequiredType::Required(ScalarOrUserType::Scalar(
-//                         Scalar::String
-//                     )),
-//                     required: false
-//                 }
-//             )
-//         );
-//         assert_eq!(
-//             parse_type("[String!]!").unwrap(),
-//             (
-//                 "",
-//                 Type::Array {
-//                     inner: OptionalOrRequiredType::Required(ScalarOrUserType::Scalar(
-//                         Scalar::String
-//                     )),
-//                     required: true
-//                 }
-//             )
-//         );
-//         assert_eq!(
-//             parse_type("[MyType]").unwrap(),
-//             (
-//                 "",
-//                 Type::Array {
-//                     inner: OptionalOrRequiredType::Optional(ScalarOrUserType::UserDefined(
-//                         "MyType"
-//                     )),
-//                     required: false
-//                 }
-//             )
-//         );
-//         assert_eq!(
-//             parse_type("[MyType]!").unwrap(),
-//             (
-//                 "",
-//                 Type::Array {
-//                     inner: OptionalOrRequiredType::Optional(ScalarOrUserType::UserDefined(
-//                         "MyType"
-//                     )),
-//                     required: true
-//                 }
-//             )
-//         );
-//         assert_eq!(
-//             parse_type("[MyType!]").unwrap(),
-//             (
-//                 "",
-//                 Type::Array {
-//                     inner: OptionalOrRequiredType::Required(ScalarOrUserType::UserDefined(
-//                         "MyType"
-//                     )),
-//                     required: false
-//                 }
-//             )
-//         );
-//         assert_eq!(
-//             parse_type("[MyType!]!").unwrap(),
-//             (
-//                 "",
-//                 Type::Array {
-//                     inner: OptionalOrRequiredType::Required(ScalarOrUserType::UserDefined(
-//                         "MyType"
-//                     )),
-//                     required: true
-//                 }
-//             )
-//         );
-//     }
-// }
