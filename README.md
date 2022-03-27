@@ -23,29 +23,29 @@ Additional languages may be added in the future. Contributions are welcome!
 
 ```
 aggregate BankAccount {
-  open_account(initial_balance: Float!) -> OpenedAccount!
-  deposit_funds(amount: Float!) -> ReceivedFunds!
-  withdraw_funds(amount: Float!) -> SentFunds!
-  send_funds(amount: Float!, user: User!) -> (SentFunds | ReceivedFunds)
+  open_account(initial_balance: Float) -> OpenedAccount
+  deposit_funds(amount: Float) -> ReceivedFunds
+  withdraw_funds(amount: Float) -> SentFunds
+  send_funds(amount: Float, user: User) -> (SentFunds? | ReceivedFunds?)
 }
 
 event OpenedAccount {
-  initial_balance: Float!
+  initial_balance: Float
 }
 
 event SentFunds {
-  amount: Float!
-  user: User
+  amount: Float
+  user: User?
 }
 
 event ReceivedFunds {
-  amount: Float!
-  user: User
+  amount: Float
+  user: User?
 }
 
 type User {
-  id: String!
-  name: String
+  id: String
+  name: String?
 }
 ```
 
@@ -61,12 +61,12 @@ type User {
 
 ### Optional & Required
 
-Types can be marked as required by adding the `!` suffix.
+Types can be marked as optional by adding the `?` suffix.
 
 | Type     | Syntax | Example   |
 | -------- | ------ | --------- |
-| Optional | `T`    | `String`  |
-| Required | `T!`   | `String!` |
+| Required | `T`    | `String`  |
+| Optional | `T?`   | `String?` |
 
 ### Repeating Types
 
@@ -77,14 +77,14 @@ Types can be repeated by wrapping them in `[]`.
 | Single | `T`    | `String`   |
 | Array  | `[T]`  | `[String]` |
 
-Remember, we can mark types as required, even in arrays.
+Remember, we can mark types as optional, even in arrays.
 
 | Type                 | Syntax  | Example      |
 | -------------------- | ------- | ------------ |
-| Optional Array       | `[T]`   | `[String]`   |
-| Required Array       | `[T]!`  | `[String]!`  |
-| Required Array Items | `[T!]`  | `[String!]`  |
-| Required Array Items | `[T!]!` | `[String!]!` |
+| Optional Array       | `[T?]?` | `[String?]?` |
+| Required Array       | `[T?]`  | `[String?]`  |
+| Required Array Items | `[T]?`  | `[String]?`  |
+| Required Array Items | `[T]`   | `[String]`   |
 
 ---
 

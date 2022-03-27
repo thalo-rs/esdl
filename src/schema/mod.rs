@@ -88,8 +88,8 @@ impl str::FromStr for Schema {
 ///
 /// ```text
 /// aggregate BankAccount  {
-///   open_account(user: User!, initial_balance: Float): OpenedAccount
-///   make_transaction(amount: Float): (DepositedFunds! | WithdrewFunds!)
+///   open_account(user: User, initial_balance: Float?): OpenedAccount
+///   make_transaction(amount: Float?): (DepositedFunds | WithdrewFunds)
 /// }
 /// ```
 #[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
@@ -127,8 +127,8 @@ impl Aggregate {
 }
 
 /// Command definition with name, params and resulting events.
-/// - `open_account(initial_balance: Float!): OpenedAccount`
-/// - `make_transaction(amount: Float!): (DepositedFunds | WithdrewFunds!)`
+/// - `open_account(initial_balance: Float): OpenedAccount?`
+/// - `make_transaction(amount: Float): (DepositedFunds? | WithdrewFunds)`
 #[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct Command {
     pub name: String,
@@ -190,7 +190,7 @@ impl Param {
 
 /// Events resulted by a command.
 /// - `Event`
-/// - `(EventOne, EventTwo!)`
+/// - `(EventOne?, EventTwo)`
 #[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub enum CommandEvents {
     Single(EventOpt),
@@ -255,7 +255,7 @@ impl EventOpt {
 ///
 /// ```text
 /// event WithdrewFunds {
-///   amount: Float!
+///   amount: Float
 /// }
 /// ```
 #[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
@@ -298,8 +298,8 @@ impl Event {
 ///
 /// ```text
 /// type User {
-///   name: String!
-///   age: Int
+///   name: String
+///   age: Int?
 /// }
 /// ```
 #[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
@@ -340,8 +340,8 @@ impl CustomType {
 
 /// A type which can be a single type or array type.
 /// - `String`
+/// - `[String]?`
 /// - `[String]`
-/// - `[String]!`
 #[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub enum RepeatableType {
     Single(TypeOpt),
@@ -360,13 +360,13 @@ impl RepeatableType {
             )),
             crate::parser::types::Type::Array {
                 inner,
-                required: false,
+                optional: true,
             } => Ok(RepeatableType::OptionalArray(
                 TypeOpt::from_optional_or_required_type(custom_types, inner)?,
             )),
             crate::parser::types::Type::Array {
                 inner,
-                required: true,
+                optional: false,
             } => Ok(RepeatableType::RequiredArray(
                 TypeOpt::from_optional_or_required_type(custom_types, inner)?,
             )),
@@ -375,8 +375,8 @@ impl RepeatableType {
 }
 
 /// An optional or required type.
+/// - `String?`
 /// - `String`
-/// - `String!`
 #[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub enum TypeOpt {
     Optional(TypeRef),

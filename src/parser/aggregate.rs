@@ -118,11 +118,11 @@ pub enum ReturnTypeOptionalOrRequired<'i> {
 pub fn parse_return_type_optional_or_required(
     input: Span,
 ) -> IResult<Span, ReturnTypeOptionalOrRequired<'_>> {
-    map(pair(parse_camel_ident, opt(char('!'))), |(ty, required)| {
-        if required.is_some() {
-            ReturnTypeOptionalOrRequired::Required(ty)
-        } else {
+    map(pair(parse_camel_ident, opt(char('?'))), |(ty, optional)| {
+        if optional.is_some() {
             ReturnTypeOptionalOrRequired::Optional(ty)
+        } else {
+            ReturnTypeOptionalOrRequired::Required(ty)
         }
     })(input)
 }
