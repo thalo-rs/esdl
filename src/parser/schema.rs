@@ -5,16 +5,19 @@ use nom::{
     multi::many0,
     sequence::delimited,
 };
+use semver::Version;
 
 use super::{
     aggregate::{parse_aggregate, Aggregate},
     event::{parse_event, Event},
     types::{parse_custom_type, CustomType},
+    version::parse_version,
     IResult, Span,
 };
 
 #[derive(Clone, Debug, Default, PartialEq)]
 pub struct Schema<'i> {
+    pub versions: Vec<Version>,
     pub aggregates: Vec<Aggregate<'i>>,
     pub events: Vec<Event<'i>>,
     pub types: Vec<CustomType<'i>>,
@@ -25,6 +28,7 @@ enum SchemaType<'i> {
     Aggregate(Aggregate<'i>),
     Event(Event<'i>),
     CustomType(CustomType<'i>),
+    Version(Version),
     Noop,
 }
 
@@ -34,6 +38,7 @@ pub fn parse_schema(input: Span) -> IResult<Span, Schema> {
         many0(alt((
             value(SchemaType::Noop, multispace1),
             map(parse_aggregate, SchemaType::Aggregate),
+            map(parse_version, SchemaType::Version),
             map(parse_event, SchemaType::Event),
             map(parse_custom_type, SchemaType::CustomType),
         ))),
@@ -47,6 +52,7 @@ pub fn parse_schema(input: Span) -> IResult<Span, Schema> {
                 SchemaType::Aggregate(aggregate) => acc.aggregates.push(aggregate),
                 SchemaType::Event(event) => acc.events.push(event),
                 SchemaType::CustomType(ty) => acc.types.push(ty),
+                SchemaType::Version(version) => acc.versions.push(version),
                 SchemaType::Noop => {}
             }
 

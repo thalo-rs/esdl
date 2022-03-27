@@ -22,8 +22,12 @@ pub enum Error {
     Io(#[from] std::io::Error),
     #[error("missing aggregate")]
     MissingAggregate,
+    #[error("missing version")]
+    MissingVersion,
     #[error("multiple aggregates")]
     MultipleAggregates,
+    #[error("multiple versions")]
+    MultipleVersions,
     #[error("parse error: {0}")]
     Parse(String),
     #[error("type not defined {0}")]
