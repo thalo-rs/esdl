@@ -445,7 +445,6 @@ impl RustTypeDerives for Scalar {
             Scalar::Float => HashSet::from_iter([
                 Clone,
                 Copy,
-                Hash,
                 Debug,
                 Default,
                 PartialEq,
