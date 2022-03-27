@@ -1,4 +1,7 @@
-use std::{collections::HashMap, fmt::Write};
+use std::{
+    collections::{HashMap, HashSet},
+    fmt::{self, Write},
+};
 
 use heck::ToUpperCamelCase;
 
@@ -135,10 +138,15 @@ impl Compile for RustCompiler {
 impl RustCompiler {
     fn compile_schema_types(&self, code: &mut String, types: &HashMap<String, CustomType>) {
         for (type_name, ty) in types {
-            writeln!(
-                code,
-                "#[derive(Clone, Debug, serde::Deserialize, PartialEq, serde::Serialize)]"
-            );
+            let derives = ty
+                .fields
+                .derives()
+                .into_iter()
+                .map(|derive| derive.to_string())
+                .collect::<Vec<_>>()
+                .join(", ");
+
+            writeln!(code, "#[derive({derives})]");
             writeln!(code, "pub struct {} {{", type_name);
             for (field_name, field) in &ty.fields {
                 writeln!(code, "    pub {}: {},", field_name, field.to_rust_type());
@@ -167,7 +175,15 @@ impl RustCompiler {
         writeln!(code, "}}\n");
 
         for (event_name, event) in events {
-            writeln!(code, "#[derive(Clone, Debug, serde::Deserialize, thalo::event::Event, PartialEq, serde::Serialize)]");
+            let derives = event
+                .fields
+                .derives()
+                .into_iter()
+                .map(|derive| derive.to_string())
+                .collect::<Vec<_>>()
+                .join(", ");
+
+            writeln!(code, "#[derive({derives}, thalo::event::Event)]");
             writeln!(
                 code,
                 r#"#[thalo(parent = "{}Event", variant = "{}")]"#,
@@ -300,6 +316,145 @@ impl ToRustType for Scalar {
             Scalar::Float => "f64".to_string(),
             Scalar::Bool => "bool".to_string(),
             Scalar::Timestamp => "chrono::DateTime<chrono::FixedOffset>".to_string(),
+        }
+    }
+}
+
+#[derive(Clone, Copy, Hash, Debug, Eq, PartialEq, Ord, PartialOrd)]
+enum DeriveTrait {
+    Clone,
+    Copy,
+    Hash,
+    Debug,
+    Default,
+    Eq,
+    PartialEq,
+    Ord,
+    PartialOrd,
+    Serialize,
+    Deserialize,
+}
+
+impl DeriveTrait {
+    fn all() -> HashSet<Self> {
+        HashSet::from_iter([
+            DeriveTrait::Clone,
+            DeriveTrait::Copy,
+            DeriveTrait::Hash,
+            DeriveTrait::Debug,
+            DeriveTrait::Default,
+            DeriveTrait::Eq,
+            DeriveTrait::PartialEq,
+            DeriveTrait::Ord,
+            DeriveTrait::PartialOrd,
+            DeriveTrait::Serialize,
+            DeriveTrait::Deserialize,
+        ])
+    }
+}
+
+impl fmt::Display for DeriveTrait {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        use DeriveTrait::*;
+
+        match self {
+            Clone => write!(f, "Clone"),
+            Copy => write!(f, "Copy"),
+            Hash => write!(f, "Hash"),
+            Debug => write!(f, "Debug"),
+            Default => write!(f, "Default"),
+            Eq => write!(f, "Eq"),
+            PartialEq => write!(f, "PartialEq"),
+            Ord => write!(f, "Ord"),
+            PartialOrd => write!(f, "PartialOrd"),
+            Serialize => write!(f, "serde::Serialize"),
+            Deserialize => write!(f, "serde::Deserialize"),
+        }
+    }
+}
+
+trait RustTypeDerives {
+    fn derives(&self) -> HashSet<DeriveTrait>;
+}
+
+impl RustTypeDerives for HashMap<String, RepeatableType> {
+    fn derives(&self) -> HashSet<DeriveTrait> {
+        self.iter()
+            .fold(DeriveTrait::all(), |acc, (_, ty)| &acc & &ty.derives())
+    }
+}
+
+impl RustTypeDerives for RepeatableType {
+    fn derives(&self) -> HashSet<DeriveTrait> {
+        match self {
+            RepeatableType::Single(type_opt) => type_opt.derives(),
+            RepeatableType::OptionalArray(type_opt) => type_opt.derives(),
+            RepeatableType::RequiredArray(type_opt) => type_opt.derives(),
+        }
+    }
+}
+
+impl RustTypeDerives for TypeOpt {
+    fn derives(&self) -> HashSet<DeriveTrait> {
+        match self {
+            TypeOpt::Optional(type_ref) => type_ref.derives(),
+            TypeOpt::Required(type_ref) => type_ref.derives(),
+        }
+    }
+}
+
+impl RustTypeDerives for TypeRef {
+    fn derives(&self) -> HashSet<DeriveTrait> {
+        match self {
+            TypeRef::Scalar(scalar) => scalar.derives(),
+            TypeRef::Custom(custom_type) => custom_type.fields.derives(),
+        }
+    }
+}
+
+impl RustTypeDerives for Scalar {
+    fn derives(&self) -> HashSet<DeriveTrait> {
+        use DeriveTrait::*;
+
+        match self {
+            Scalar::String => HashSet::from_iter([
+                Clone,
+                Hash,
+                Debug,
+                Default,
+                Eq,
+                PartialEq,
+                Ord,
+                PartialOrd,
+                Serialize,
+                Deserialize,
+            ]),
+            Scalar::Int => HashSet::from_iter([
+                Clone,
+                Copy,
+                Hash,
+                Debug,
+                Default,
+                Eq,
+                PartialEq,
+                Ord,
+                PartialOrd,
+                Serialize,
+                Deserialize,
+            ]),
+            Scalar::Float => HashSet::from_iter([
+                Clone,
+                Copy,
+                Hash,
+                Debug,
+                Default,
+                PartialEq,
+                PartialOrd,
+                Serialize,
+                Deserialize,
+            ]),
+            Scalar::Bool => DeriveTrait::all(),
+            Scalar::Timestamp => DeriveTrait::all(),
         }
     }
 }
