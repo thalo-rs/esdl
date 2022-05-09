@@ -65,10 +65,11 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
 
     // Instantiate our module with the imports we've created, and run it.
     let module = Module::from_file(&engine, "target/wasm32-wasi/release/bank_account_wasm.wasm")?;
-    linker.module(&mut store, "", &module)?;
 
     let (domain, _instance) =
         Domain::instantiate(&mut store, &module, &mut linker, move |ctx| &mut ctx.domain)?;
+
+    linker.module(&mut store, "", &module)?;
 
     // Create a new aggregate instance
     let mut state = domain.new_instance(&mut store, "john-doe")??;
