@@ -129,3 +129,43 @@ impl std::fmt::Display for domain::Error {
     }
 }
 ```
+
+---
+
+Commands are sent in the following format:
+
+```json
+{
+  "command": "command_name",
+  "params": {
+    ...
+  }
+}
+```
+
+```rust
+struct Command {
+    command: String,
+    params: serde_json::Map<String, serde_json::Value>,
+}
+```
+
+Events are sent in the following format:
+
+```json
+{
+  "event": "EventName",
+  "data": {
+    ...
+  }
+}
+```
+
+```rust
+struct Event {
+    event: String,
+    data: serde_json::Map<String, serde_json::Value>,
+}
+```
+
+
