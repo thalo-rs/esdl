@@ -51,7 +51,7 @@ pub mod wasm;
 ///
 /// Wasm is supported through the "wasm" feature flag.
 ///
-/// `esdl = { version = "*", features = ["codegen-rust", "wasm"] }`
+/// `esdl = { version = "*", features = ["codegen-rust-wasm"] }`
 ///
 /// The following peer dependencies are required:
 ///
@@ -221,9 +221,7 @@ impl RustCompiler {
         writeln!(code, "}}");
         writeln!(code);
         writeln!(code, "pub trait {}Command {{", name);
-        #[cfg(feature = "wasm")]
         writeln!(code, "    type Error: std::fmt::Display;");
-        #[cfg(not(feature = "wasm"))]
         writeln!(code, "    type Error;");
         writeln!(code);
         for (command_name, command) in commands {

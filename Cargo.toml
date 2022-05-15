@@ -42,4 +42,3 @@ codegen-rust-wasm = [
   "wit-bindgen-gen-rust-wasm",
 ]
 codegen-typescript = []
-wasm = []
