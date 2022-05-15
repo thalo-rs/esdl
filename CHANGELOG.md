@@ -2,6 +2,39 @@
 All notable changes to this project will be documented in this file. See [conventional commits](https://www.conventionalcommits.org/) for commit guidelines.
 
 - - -
+## [0.5.0](https://github.com/thalo-rs/esdl/compare/0.4.0..0.5.0) - 2022-05-15
+#### Bug Fixes
+- **(examples/bank-account-wasm)** build script - ([214d730](https://github.com/thalo-rs/esdl/commit/214d7307bbb63d62e0195f45c1108995e22f413e)) - [@tqwewe](https://github.com/tqwewe)
+- rust codegen derive hash for f64 - ([0c8497c](https://github.com/thalo-rs/esdl/commit/0c8497cd9e12ea3d41348f892609124e48d851be)) - [@tqwewe](https://github.com/tqwewe)
+- cfg syntax error - ([924c466](https://github.com/thalo-rs/esdl/commit/924c4662f7b808371544e2f92346fedf4c0e555b)) - [@tqwewe](https://github.com/tqwewe)
+#### Documentation
+- fix version example in README.md - ([1b4c553](https://github.com/thalo-rs/esdl/commit/1b4c553f8c1e2b33df722d8978801a988285beb2)) - [@tqwewe](https://github.com/tqwewe)
+- add command and event wasm format docs - ([e217c6c](https://github.com/thalo-rs/esdl/commit/e217c6c58ad25a02c7393e12e83c42443a3bda12)) - [@tqwewe](https://github.com/tqwewe)
+- fix code example in examples/bank-account-wasm README.md - ([11e82da](https://github.com/thalo-rs/esdl/commit/11e82da5c0bb233ba144f4d99c35bf554a68ca99)) - [@tqwewe](https://github.com/tqwewe)
+- add version to README example - ([16c9477](https://github.com/thalo-rs/esdl/commit/16c94772c0ebc83037242d2427baf71b81ab9973)) - [@tqwewe](https://github.com/tqwewe)
+- update README with optional syntax - ([6e63a97](https://github.com/thalo-rs/esdl/commit/6e63a971bfff162296598131a2210b908273a8a5)) - [@tqwewe](https://github.com/tqwewe)
+#### Features
+- **(examples/bank-account-wasm)** update schema to use new optional syntax - ([a7045c1](https://github.com/thalo-rs/esdl/commit/a7045c13deb6ef671a77c3ea821cb01fb7820afc)) - [@tqwewe](https://github.com/tqwewe)
+- add version support - ([48575f1](https://github.com/thalo-rs/esdl/commit/48575f1cf6638c66f2c311787c5198e2eeedbb03)) - [@tqwewe](https://github.com/tqwewe)
+- add additional dynamic derives to rust codegen - ([842b5f2](https://github.com/thalo-rs/esdl/commit/842b5f26714b95c27f2d58dafa04f5771a3b800f)) - [@tqwewe](https://github.com/tqwewe)
+- implement `serde::Deserialize` for schema types - ([eb6425f](https://github.com/thalo-rs/esdl/commit/eb6425f2624db7b0860428b9a9003d71dbba6543)) - [@tqwewe](https://github.com/tqwewe)
+- use `?` for optional types - ([8029e59](https://github.com/thalo-rs/esdl/commit/8029e59552066ed093e80bb0919320651159d251)) - [@tqwewe](https://github.com/tqwewe)
+- use `->` separator for return type - ([9b33cf7](https://github.com/thalo-rs/esdl/commit/9b33cf79d32822d8402f3ec699f097c19eb99069)) - [@tqwewe](https://github.com/tqwewe)
+- add codegen-rust-wasm - ([288ac15](https://github.com/thalo-rs/esdl/commit/288ac15b41ad876159aea70a76dbd9ff2e2d8f47)) - [@tqwewe](https://github.com/tqwewe)
+#### Miscellaneous Chores
+- merge pull request #9 from thalo-rs/feat/versioning - ([bdbec86](https://github.com/thalo-rs/esdl/commit/bdbec864e8eccc7de5d4e1f3ea4496e382e9e662)) - [@tqwewe](https://github.com/tqwewe)
+- upgrade git versions in Cargo.lock - ([b04168c](https://github.com/thalo-rs/esdl/commit/b04168ce7cbb9f6c462147c5bcaba70b3eca0b85)) - [@tqwewe](https://github.com/tqwewe)
+- merge branch 'main' into feat/versioning - ([2f8400c](https://github.com/thalo-rs/esdl/commit/2f8400cb97a257a882192c8ceb37a6e4d133c075)) - [@tqwewe](https://github.com/tqwewe)
+- upgrade dependencies - ([0080411](https://github.com/thalo-rs/esdl/commit/008041131bce9ed139202178a45ce20da9056ac5)) - [@tqwewe](https://github.com/tqwewe)
+- merge pull request #8 from thalo-rs/feat/explicit-optional - ([ff217f1](https://github.com/thalo-rs/esdl/commit/ff217f11a50e33f6b9a1a23b80bfe27a40eb8770)) - [@tqwewe](https://github.com/tqwewe)
+- merge branch 'main' into feat/explicit-optional - ([4bbb66d](https://github.com/thalo-rs/esdl/commit/4bbb66db827b99c801bb25d9059e0cbcd9e3f152)) - [@tqwewe](https://github.com/tqwewe)
+- merge branch 'main' of github.com:thalo-rs/esdl into feat/syntax-updates - ([80f975e](https://github.com/thalo-rs/esdl/commit/80f975ecc17bdd4f4e94824b5b5d22b5df05d938)) - [@tqwewe](https://github.com/tqwewe)
+#### Refactoring
+- modules and errors - ([652f8c7](https://github.com/thalo-rs/esdl/commit/652f8c7c94cfcb96b4b772486f62503bdfacd5f0)) - [@tqwewe](https://github.com/tqwewe)
+#### Tests
+- add schema parse tests - ([ece94a9](https://github.com/thalo-rs/esdl/commit/ece94a96c67d01740d8efb6505874daf71f5f67c)) - [@tqwewe](https://github.com/tqwewe)
+- - -
+
 ## [0.4.0](https://github.com/thalo-rs/esdl/compare/0.3.0..0.4.0) - 2022-01-30
 #### Bug Fixes
 - codege-typescript `compile_before` implementation - ([3811495](https://github.com/thalo-rs/esdl/commit/3811495a32bda465ad5579b8d23650577bf10c6d)) - [@tqwewe](https://github.com/tqwewe)
