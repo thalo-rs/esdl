@@ -22,6 +22,8 @@ Additional languages may be added in the future. Contributions are welcome!
 ## Example
 
 ```
+version = "0.1."
+
 aggregate BankAccount {
   open_account(initial_balance: Float) -> OpenedAccount
   deposit_funds(amount: Float) -> ReceivedFunds

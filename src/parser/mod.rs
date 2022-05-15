@@ -6,6 +6,7 @@ pub mod ident;
 pub mod parsers;
 pub mod schema;
 pub mod types;
+pub mod version;
 
 pub type Span<'i> = &'i str;
 pub type Error<I> = ErrorTree<I>;
@@ -21,6 +22,8 @@ pub fn parse<'i>(input: impl Into<Span<'i>>) -> Result<Schema<'i>, Error<Span<'i
 
 #[cfg(test)]
 mod tests {
+    use semver::{BuildMetadata, Prerelease, Version};
+
     use super::{
         aggregate::{Aggregate, Command, Param, ReturnType, ReturnTypeOptionalOrRequired},
         event::{Event, Field},
@@ -33,6 +36,8 @@ mod tests {
     #[test]
     fn it_parses_basic_schema() -> Result<(), Error<Span<'static>>> {
         let schema_str = r#"
+            version = "0.1.0"
+
             aggregate Hello {
                 world(name: String) -> FooEvent
             }
@@ -43,6 +48,7 @@ mod tests {
         "#;
 
         let expected = Schema {
+            versions: vec![Version::new(0, 1, 0)],
             aggregates: vec![Aggregate {
                 ident: "Hello",
                 commands: vec![Command {
@@ -78,6 +84,8 @@ mod tests {
     #[test]
     fn it_parses_bank_account_schema() -> Result<(), Error<Span<'static>>> {
         let schema_str = r#"
+          version = "10.2.4-alpha"
+
           aggregate BankAccount {
             open_account(name: String?, initial_balance: Float) -> OpenedAccount?
             deposit_funds(amount: Float) -> DepositedFunds?
@@ -98,7 +106,16 @@ mod tests {
           }          
         "#;
 
+        let version = Version {
+            major: 10,
+            minor: 2,
+            patch: 4,
+            pre: Prerelease::new("alpha").unwrap(),
+            build: BuildMetadata::EMPTY,
+        };
+
         let expected = Schema {
+            versions: vec![version],
             aggregates: vec![Aggregate {
                 ident: "BankAccount",
                 commands: vec![

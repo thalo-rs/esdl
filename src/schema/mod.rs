@@ -4,6 +4,7 @@ use std::{
     str::{self, FromStr},
 };
 
+use semver::Version;
 use serde::{Deserialize, Serialize};
 
 pub use error::Error;
@@ -13,6 +14,7 @@ mod error;
 /// Schema definition including aggregate, commands, events & custom types.
 #[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct Schema {
+    pub version: Version,
     pub aggregate: Aggregate,
     pub events: HashMap<String, Event>,
     pub types: HashMap<String, CustomType>,
@@ -61,7 +63,18 @@ impl Schema {
             }
         };
 
+        let version = if schema.versions.len() > 1 {
+            return Err(Error::MultipleVersions);
+        } else {
+            schema
+                .versions
+                .into_iter()
+                .next()
+                .ok_or(Error::MissingVersion)?
+        };
+
         Ok(Schema {
+            version,
             aggregate,
             events,
             types,

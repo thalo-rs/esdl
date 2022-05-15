@@ -1,3 +1,5 @@
+version = "0.1.0"
+
 aggregate BankAccount {
   open_account(initial_balance: Float) -> OpenedAccount
   deposit_funds(amount: Float) -> DepositedFunds
