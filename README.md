@@ -8,6 +8,17 @@ Schema definition language for defining aggregates, commands, events & custom ty
 
 Heavily inspired by GraphQL syntax, you can describe aggregates which can be used for codegen in different languages.
 
+## Install
+
+> Due to the wit-bindgen project not having their crates published yet (see https://github.com/bytecodealliance/wit-bindgen/issues/180),
+> `esdl` is not up to date on crates.io and it's advised to use the git url as the dependency for now.
+
+```toml
+esdl = { git = "https://github.com/thalo-rs/esdl", features = ["codegen-rust"] }
+```
+
+*Possible features include `codegen-rust`, `codegen-rust-wasm` and `codegen-typescript`.*
+
 ## Code generation
 
 ESDL schemas can be used for code generation.
