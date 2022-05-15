@@ -33,3 +33,9 @@ pub enum Error {
     #[error("type not defined {0}")]
     TypeNotDefined(String),
 }
+
+impl From<nom_supreme::error::ErrorTree<&str>> for Error {
+    fn from(err: nom_supreme::error::ErrorTree<&str>) -> Self {
+        Error::Parse(err.to_string())
+    }
+}

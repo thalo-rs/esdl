@@ -14,8 +14,9 @@ ESDL schemas can be used for code generation.
 
 The [Rust crate](https://crates.io/crates/esdl) currently supports code generation for:
 
-- [Rust](https://docs.rs/esdl/latest/esdl/codegen/rust/struct.RustCompiler.html)
-- [TypeScript](https://docs.rs/esdl/latest/esdl/codegen/typescript/struct.TypeScriptCompiler.html)
+- [Rust](https://docs.rs/esdl/latest/esdl/codegen/rust/struct.RustCompiler.html) (`codegen-rust`)
+- [Rust WASM](https://docs.rs/esdl/latest/esdl/codegen/rust/wasm/struct.RustWasmCompiler.html) (`codegen-rust-wasm`)
+- [TypeScript](https://docs.rs/esdl/latest/esdl/codegen/typescript/struct.TypeScriptCompiler.html) (`codegen-typescript`)
 
 Additional languages may be added in the future. Contributions are welcome!
 

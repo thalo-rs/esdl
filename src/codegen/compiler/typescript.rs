@@ -70,7 +70,24 @@ use super::Compile;
 pub struct TypeScriptCompiler;
 
 impl Compile for TypeScriptCompiler {
-    fn compile_before(&self, code: &mut String, _schema: &Schema) {
+    fn compile_schema(&self, schema: &Schema) -> String {
+        let mut code = String::new();
+
+        self.compile_before(&mut code);
+        self.compile_schema_types(&mut code, &schema.types);
+        self.compile_schema_events(&mut code, &schema.aggregate.name, &schema.events);
+        self.compile_schema_commands(
+            &mut code,
+            &schema.aggregate.name,
+            &schema.aggregate.commands,
+        );
+
+        code
+    }
+}
+
+impl TypeScriptCompiler {
+    fn compile_before(&self, code: &mut String) {
         writeln!(code, "import type {{ Event }} from 'thalo';");
         writeln!(code);
     }

@@ -2,9 +2,7 @@
 
 use std::{collections::HashMap, env, fs, path::Path};
 
-use crate::schema::Schema;
-
-use super::error::Error;
+use crate::{schema::Schema, Error};
 
 #[cfg(any(feature = "codegen-rust", feature = "codegen-rust-wasm"))]
 pub mod rust;
@@ -51,8 +49,7 @@ impl<C: Compile> Compiler<C> {
 
     /// Add a schema from yaml string.
     pub fn add_schema_str(self, content: &str) -> Result<Self, Error> {
-        let parsed_schema = crate::parse(content).map_err(|err| Error::Parse(err.to_string()))?;
-        let schema = Schema::validate_parsed_schema(parsed_schema)?;
+        let schema = crate::parse(content)?;
         Ok(self.add_schema(schema))
     }
 

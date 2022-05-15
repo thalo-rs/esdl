@@ -23,7 +23,7 @@ rustdoc-args = ["--cfg", "docsrs"]
 handlebars = { version = "4.2", optional = true }
 heck = { version = "0.4", optional = true }
 nom = { version = "7.1", features = ["alloc"] }
-nom-supreme = { version = "0.7", features = ["error"] }
+nom-supreme = "0.8"
 semver = { version = "1.0", features = ["serde"] }
 serde = { version = "1.0", features = ["derive"] }
 thiserror = "1.0"

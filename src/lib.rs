@@ -1,5 +1,4 @@
 #![doc = include_str!("../README.md")]
-
 //!
 //! ## Code generation
 //!
@@ -7,13 +6,15 @@
 
 #![cfg_attr(docsrs, feature(doc_cfg, doc_auto_cfg))]
 
-pub use parser::parse;
-
-#[cfg(any(
-    feature = "codegen-rust",
-    feature = "codegen-rust-wasm",
-    feature = "codegen-typescript",
-))]
 pub mod codegen;
+mod error;
 pub(crate) mod parser;
 pub mod schema;
+
+pub use error::Error;
+
+/// Parse and validate an ESDL schema string.
+pub fn parse(input: &str) -> Result<schema::Schema, Error> {
+    let schema = parser::parse(input)?;
+    schema::Schema::validate_parsed_schema(schema)
+}

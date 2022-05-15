@@ -43,9 +43,9 @@ dependencies = [
 
 [[package]]
 name = "brownstone"
-version = "1.1.0"
+version = "3.0.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "030ea61398f34f1395ccbeb046fb68c87b631d1f34567fed0f0f11fa35d18d8d"
+checksum = "c5839ee4f953e811bfdcf223f509cb2c6a3e1447959b0bff459405575bc17f22"
 dependencies = [
  "arrayvec",
 ]
@@ -200,9 +200,9 @@ dependencies = [
 
 [[package]]
 name = "nom-supreme"
-version = "0.7.0"
+version = "0.8.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "2f909b25a8371ad5c054abc2c48205d677231e6a2dcbf83704ed57bb147f30e0"
+checksum = "2bd3ae6c901f1959588759ff51c95d24b491ecb9ff91aa9c2ef4acc5b1dcab27"
 dependencies = [
  "brownstone",
  "indent_write",

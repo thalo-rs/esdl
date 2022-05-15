@@ -7,9 +7,7 @@ use std::{
 use semver::Version;
 use serde::{Deserialize, Serialize};
 
-pub use error::Error;
-
-mod error;
+use crate::Error;
 
 /// Schema definition including aggregate, commands, events & custom types.
 #[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
@@ -91,9 +89,7 @@ impl str::FromStr for Schema {
     type Err = Error;
 
     fn from_str(s: &str) -> Result<Self, Self::Err> {
-        let parsed_schema = crate::parse(s).map_err(|err| Error::Parse(err.to_string()))?;
-        let schema = Schema::validate_parsed_schema(parsed_schema)?;
-        Ok(schema)
+        crate::parse(s)
     }
 }
 
