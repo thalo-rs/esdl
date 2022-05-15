@@ -221,7 +221,6 @@ impl RustCompiler {
         writeln!(code, "}}");
         writeln!(code);
         writeln!(code, "pub trait {}Command {{", name);
-        writeln!(code, "    type Error: std::fmt::Display;");
         writeln!(code, "    type Error;");
         writeln!(code);
         for (command_name, command) in commands {
