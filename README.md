@@ -17,7 +17,7 @@ Heavily inspired by GraphQL syntax, you can describe aggregates which can be use
 esdl = { git = "https://github.com/thalo-rs/esdl", features = ["codegen-rust"] }
 ```
 
-*Possible features include `codegen-rust`, `codegen-rust-wasm` and `codegen-typescript`.*
+_Possible features include `codegen-rust`, `codegen-rust-wasm` and `codegen-typescript`._
 
 ## Code generation
 
@@ -65,13 +65,24 @@ type User {
 
 ### Scalar Types
 
-| Scalar      | Rust Type                                                                            | TypeScript Type                                                                                                          |
-| ----------- | ------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------ |
-| `String`    | [`String`](https://doc.rust-lang.org/stable/std/string/struct.String.html)           | [`string`](https://www.typescriptlang.org/docs/handbook/2/everyday-types.html#the-primitives-string-number-and-boolean)  |
-| `Int`       | [`i64`](https://doc.rust-lang.org/stable/std/primitive.i64.html)                     | [`number`](https://www.typescriptlang.org/docs/handbook/2/everyday-types.html#the-primitives-string-number-and-boolean)  |
-| `Float`     | [`f64`](https://doc.rust-lang.org/stable/std/primitive.f64.html)                     | [`number`](https://www.typescriptlang.org/docs/handbook/2/everyday-types.html#the-primitives-string-number-and-boolean)  |
-| `Bool`      | [`bool`](https://doc.rust-lang.org/stable/std/primitive.bool.html)                   | [`boolean`](https://www.typescriptlang.org/docs/handbook/2/everyday-types.html#the-primitives-string-number-and-boolean) |
-| `Timestamp` | [`DateTime<FixedOffset>`](https://docs.rs/chrono/latest/chrono/struct.DateTime.html) | [`Date`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/Date)                     |
+| Scalar      | Rust Type                 | TypeScript Type |
+| ----------- | ------------------------- | --------------- |
+| `String`    | [`String`]                | [`string`][ts]  |
+| `Int`       | [`i64`]                   | [`number`][ts]  |
+| `UInt`      | [`u64`]                   | [`number`][ts]  |
+| `Float`     | [`f64`]                   | [`number`][ts]  |
+| `Bool`      | [`bool`]                  | [`boolean`][ts] |
+| `Timestamp` | [`DateTime<FixedOffset>`] | [`Date`]        |
+
+[`string`]: https://doc.rust-lang.org/stable/std/string/struct.String.html
+[`i64`]: https://doc.rust-lang.org/stable/std/primitive.i64.html
+[`u64`]: https://doc.rust-lang.org/stable/std/primitive.u64.html
+[`f64`]: https://doc.rust-lang.org/stable/std/primitive.f64.html
+[`bool`]: https://doc.rust-lang.org/stable/std/primitive.bool.html
+[`datetime<fixedoffset>`]: https://docs.rs/chrono/latest/chrono/struct.DateTime.html
+[ts]: https://www.typescriptlang.org/docs/handbook/2/everyday-types.html#the-primitives-string-number-and-boolean
+[`boolean`]: https://www.typescriptlang.org/docs/handbook/2/everyday-types.html#the-primitives-string-number-and-boolean
+[`date`]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/Date
 
 ### Optional & Required
 

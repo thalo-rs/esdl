@@ -10,7 +10,7 @@ use super::{
     event::Field, ident::parse_camel_ident, parsers::keyword_ident_structure, IResult, Span,
 };
 
-#[derive(Clone, Debug, PartialEq)]
+#[derive(Clone, Debug, PartialEq, Eq)]
 pub struct CustomType<'i> {
     pub ident: Span<'i>,
     pub fields: Vec<Field<'i>>,
@@ -22,7 +22,7 @@ pub fn parse_custom_type(input: Span) -> IResult<Span, CustomType<'_>> {
     })(input)
 }
 
-#[derive(Clone, Debug, PartialEq)]
+#[derive(Clone, Debug, PartialEq, Eq)]
 pub enum Type<'i> {
     Single(OptionalOrRequiredType<'i>),
     Array {
@@ -50,7 +50,7 @@ pub fn parse_type(input: Span) -> IResult<Span, Type<'_>> {
     alt((single_type_parser, array_type_parser))(input)
 }
 
-#[derive(Clone, Debug, PartialEq)]
+#[derive(Clone, Debug, PartialEq, Eq)]
 pub enum ScalarOrUserType<'i> {
     Scalar(Scalar),
     UserDefined(Span<'i>),
@@ -65,7 +65,7 @@ pub fn parse_scalar_or_user_type(input: Span) -> IResult<Span, ScalarOrUserType<
     alt((scalar_parser, user_defined_parser))(input)
 }
 
-#[derive(Clone, Debug, PartialEq)]
+#[derive(Clone, Debug, PartialEq, Eq)]
 pub enum OptionalOrRequiredType<'i> {
     Optional(ScalarOrUserType<'i>),
     Required(ScalarOrUserType<'i>),
@@ -86,10 +86,11 @@ pub fn parse_optional_or_required_type(input: Span) -> IResult<Span, OptionalOrR
     optional_or_required_parser(input)
 }
 
-#[derive(Clone, Copy, Debug, PartialEq)]
+#[derive(Clone, Copy, Debug, PartialEq, Eq)]
 pub enum Scalar {
     String,
     Int,
+    UInt,
     Float,
     Bool,
     Timestamp,
@@ -101,6 +102,10 @@ pub fn parse_scalar_string(input: Span) -> IResult<Span, Scalar> {
 
 pub fn parse_scalar_int(input: Span) -> IResult<Span, Scalar> {
     value(Scalar::Int, tag("Int"))(input)
+}
+
+pub fn parse_scalar_uint(input: Span) -> IResult<Span, Scalar> {
+    value(Scalar::UInt, tag("UInt"))(input)
 }
 
 pub fn parse_scalar_float(input: Span) -> IResult<Span, Scalar> {
@@ -119,6 +124,7 @@ pub fn parse_scalar(input: Span) -> IResult<Span, Scalar> {
     alt((
         parse_scalar_string,
         parse_scalar_int,
+        parse_scalar_uint,
         parse_scalar_float,
         parse_scalar_bool,
         parse_scalar_timestamp,

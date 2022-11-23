@@ -15,7 +15,7 @@ use super::{
     IResult, Span,
 };
 
-#[derive(Clone, Debug, Default, PartialEq)]
+#[derive(Clone, Debug, Default, PartialEq, Eq)]
 pub struct Schema<'i> {
     pub versions: Vec<Version>,
     pub aggregates: Vec<Aggregate<'i>>,

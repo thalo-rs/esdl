@@ -11,7 +11,7 @@ use semver::Version;
 
 use super::{event::Field, IResult, Span};
 
-#[derive(Clone, Debug, PartialEq)]
+#[derive(Clone, Debug, PartialEq, Eq)]
 pub struct CustomType<'i> {
     pub ident: Span<'i>,
     pub fields: Vec<Field<'i>>,

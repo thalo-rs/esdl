@@ -12,7 +12,7 @@ use super::{
     IResult, Span,
 };
 
-#[derive(Clone, Debug, PartialEq)]
+#[derive(Clone, Debug, PartialEq, Eq)]
 pub struct Event<'i> {
     pub ident: Span<'i>,
     pub fields: Vec<Field<'i>>,
@@ -25,7 +25,7 @@ pub fn parse_event(input: Span) -> IResult<Span, Event<'_>> {
     })(input)
 }
 
-#[derive(Clone, Debug, PartialEq)]
+#[derive(Clone, Debug, PartialEq, Eq)]
 pub struct Field<'i> {
     pub ident: Span<'i>,
     pub ty: Type<'i>,

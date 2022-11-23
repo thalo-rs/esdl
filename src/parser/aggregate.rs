@@ -14,7 +14,7 @@ use super::{
     IResult, Span,
 };
 
-#[derive(Clone, Debug, PartialEq)]
+#[derive(Clone, Debug, PartialEq, Eq)]
 pub struct Aggregate<'i> {
     pub ident: Span<'i>,
     pub commands: Vec<Command<'i>>,
@@ -35,7 +35,7 @@ pub fn parse_aggregate(input: Span) -> IResult<Span, Aggregate> {
     )(input)
 }
 
-#[derive(Clone, Debug, PartialEq)]
+#[derive(Clone, Debug, PartialEq, Eq)]
 pub struct Command<'i> {
     pub ident: Span<'i>,
     pub params: Vec<Param<'i>>,
@@ -61,7 +61,7 @@ pub fn parse_command(input: Span) -> IResult<Span, Command<'_>> {
     })(input)
 }
 
-#[derive(Clone, Debug, PartialEq)]
+#[derive(Clone, Debug, PartialEq, Eq)]
 pub struct Param<'i> {
     pub ident: Span<'i>,
     pub ty: Type<'i>,
@@ -86,7 +86,7 @@ pub fn parse_param(input: Span) -> IResult<Span, Param<'_>> {
     )(input)
 }
 
-#[derive(Clone, Debug, PartialEq)]
+#[derive(Clone, Debug, PartialEq, Eq)]
 pub enum ReturnType<'i> {
     Single(ReturnTypeOptionalOrRequired<'i>),
     Tuple(Vec<ReturnTypeOptionalOrRequired<'i>>),
@@ -109,7 +109,7 @@ pub fn parse_return_type(input: Span) -> IResult<Span, ReturnType<'_>> {
     alt((single_return_type_parse, tuple_return_type_parse))(input)
 }
 
-#[derive(Clone, Debug, PartialEq)]
+#[derive(Clone, Debug, PartialEq, Eq)]
 pub enum ReturnTypeOptionalOrRequired<'i> {
     Optional(Span<'i>),
     Required(Span<'i>),
