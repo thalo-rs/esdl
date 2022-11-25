@@ -89,11 +89,18 @@ pub fn parse_optional_or_required_type(input: Span) -> IResult<Span, OptionalOrR
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
 pub enum Scalar {
     String,
+    /// 32-bit signed integer
     Int,
-    UInt,
+    /// 64-bit signed integer
+    Long,
+    /// 32-bit float
     Float,
+    /// 64-bit float
+    Double,
+    /// Binary value
     Bool,
-    Timestamp,
+    /// Sequence of 8-bit unsigned bytes
+    Bytes,
 }
 
 pub fn parse_scalar_string(input: Span) -> IResult<Span, Scalar> {
@@ -105,19 +112,23 @@ pub fn parse_scalar_int(input: Span) -> IResult<Span, Scalar> {
 }
 
 pub fn parse_scalar_uint(input: Span) -> IResult<Span, Scalar> {
-    value(Scalar::UInt, tag("UInt"))(input)
+    value(Scalar::Long, tag("Long"))(input)
 }
 
 pub fn parse_scalar_float(input: Span) -> IResult<Span, Scalar> {
     value(Scalar::Float, tag("Float"))(input)
 }
 
+pub fn parse_scalar_double(input: Span) -> IResult<Span, Scalar> {
+    value(Scalar::Double, tag("Double"))(input)
+}
+
 pub fn parse_scalar_bool(input: Span) -> IResult<Span, Scalar> {
     value(Scalar::Bool, tag("Bool"))(input)
 }
 
-pub fn parse_scalar_timestamp(input: Span) -> IResult<Span, Scalar> {
-    value(Scalar::Timestamp, tag("Timestamp"))(input)
+pub fn parse_scalar_bytes(input: Span) -> IResult<Span, Scalar> {
+    value(Scalar::Bytes, tag("Bytes"))(input)
 }
 
 pub fn parse_scalar(input: Span) -> IResult<Span, Scalar> {
@@ -126,7 +137,8 @@ pub fn parse_scalar(input: Span) -> IResult<Span, Scalar> {
         parse_scalar_int,
         parse_scalar_uint,
         parse_scalar_float,
+        parse_scalar_double,
         parse_scalar_bool,
-        parse_scalar_timestamp,
+        parse_scalar_bytes,
     ))(input)
 }

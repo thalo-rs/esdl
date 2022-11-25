@@ -65,24 +65,24 @@ type User {
 
 ### Scalar Types
 
-| Scalar      | Rust Type                 | TypeScript Type |
-| ----------- | ------------------------- | --------------- |
-| `String`    | [`String`]                | [`string`][ts]  |
-| `Int`       | [`i64`]                   | [`number`][ts]  |
-| `UInt`      | [`u64`]                   | [`number`][ts]  |
-| `Float`     | [`f64`]                   | [`number`][ts]  |
-| `Bool`      | [`bool`]                  | [`boolean`][ts] |
-| `Timestamp` | [`DateTime<FixedOffset>`] | [`Date`]        |
+| Scalar   | Rust Type   | TypeScript Type |
+| -------- | ----------- | --------------- |
+| `String` | [`String`]  | [`string`][ts]  |
+| `Int`    | [`i32`]     | [`number`][ts]  |
+| `Long`   | [`i64`]     | [`number`][ts]  |
+| `Float`  | [`f32`]     | [`number`][ts]  |
+| `Double` | [`f64`]     | [`number`][ts]  |
+| `Bool`   | [`bool`]    | [`boolean`][ts] |
+| `Bytes`  | [`Vec<u8>`] | [`string`][ts]  |
 
 [`string`]: https://doc.rust-lang.org/stable/std/string/struct.String.html
+[`i32`]: https://doc.rust-lang.org/stable/std/primitive.i32.html
 [`i64`]: https://doc.rust-lang.org/stable/std/primitive.i64.html
-[`u64`]: https://doc.rust-lang.org/stable/std/primitive.u64.html
+[`f32`]: https://doc.rust-lang.org/stable/std/primitive.f32.html
 [`f64`]: https://doc.rust-lang.org/stable/std/primitive.f64.html
 [`bool`]: https://doc.rust-lang.org/stable/std/primitive.bool.html
-[`datetime<fixedoffset>`]: https://docs.rs/chrono/latest/chrono/struct.DateTime.html
+[`vec<u8>`]: https://doc.rust-lang.org/stable/std/vec/struct.Vec.html
 [ts]: https://www.typescriptlang.org/docs/handbook/2/everyday-types.html#the-primitives-string-number-and-boolean
-[`boolean`]: https://www.typescriptlang.org/docs/handbook/2/everyday-types.html#the-primitives-string-number-and-boolean
-[`date`]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/Date
 
 ### Optional & Required
 

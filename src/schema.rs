@@ -462,10 +462,11 @@ impl TypeRef {
 pub enum Scalar {
     String,
     Int,
-    UInt,
+    Long,
     Float,
+    Double,
     Bool,
-    Timestamp,
+    Bytes,
 }
 
 impl From<crate::parser::types::Scalar> for Scalar {
@@ -473,10 +474,11 @@ impl From<crate::parser::types::Scalar> for Scalar {
         match scalar {
             crate::parser::types::Scalar::String => Scalar::String,
             crate::parser::types::Scalar::Int => Scalar::Int,
-            crate::parser::types::Scalar::UInt => Scalar::UInt,
+            crate::parser::types::Scalar::Long => Scalar::Long,
             crate::parser::types::Scalar::Float => Scalar::Float,
+            crate::parser::types::Scalar::Double => Scalar::Double,
             crate::parser::types::Scalar::Bool => Scalar::Bool,
-            crate::parser::types::Scalar::Timestamp => Scalar::Timestamp,
+            crate::parser::types::Scalar::Bytes => Scalar::Bytes,
         }
     }
 }
