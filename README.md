@@ -10,26 +10,9 @@ Heavily inspired by GraphQL syntax, you can describe aggregates which can be use
 
 ## Install
 
-> Due to the wit-bindgen project not having their crates published yet (see https://github.com/bytecodealliance/wit-bindgen/issues/180),
-> `esdl` is not up to date on crates.io and it's advised to use the git url as the dependency for now.
-
 ```toml
-esdl = { git = "https://github.com/thalo-rs/esdl", features = ["codegen-rust"] }
+esdl = "*"
 ```
-
-_Possible features include `codegen-rust`, `codegen-rust-wasm` and `codegen-typescript`._
-
-## Code generation
-
-ESDL schemas can be used for code generation.
-
-The [Rust crate](https://crates.io/crates/esdl) currently supports code generation for:
-
-- [Rust](https://docs.rs/esdl/latest/esdl/codegen/rust/struct.RustCompiler.html) (`codegen-rust`)
-- [Rust WASM](https://docs.rs/esdl/latest/esdl/codegen/rust/wasm/struct.RustWasmCompiler.html) (`codegen-rust-wasm`)
-- [TypeScript](https://docs.rs/esdl/latest/esdl/codegen/typescript/struct.TypeScriptCompiler.html) (`codegen-typescript`)
-
-Additional languages may be added in the future. Contributions are welcome!
 
 ## Example
 
