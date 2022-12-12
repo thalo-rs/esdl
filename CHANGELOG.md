@@ -2,6 +2,23 @@
 All notable changes to this project will be documented in this file. See [conventional commits](https://www.conventionalcommits.org/) for commit guidelines.
 
 - - -
+## [0.6.0](https://github.com/thalo-rs/esdl/compare/0.5.0..0.6.0) - 2022-12-12
+#### Bug Fixes
+- duplicate error type in rust codegen - ([6d71a16](https://github.com/thalo-rs/esdl/commit/6d71a16aa8699feb5658ded9b7bc006f927f2c59)) - [@tqwewe](https://github.com/tqwewe)
+#### Documentation
+- add git dependency note to README.md - ([3b4dc52](https://github.com/thalo-rs/esdl/commit/3b4dc5206e54b84d0165c56a6b4b2748e5fd1231)) - [@tqwewe](https://github.com/tqwewe)
+#### Features
+- implement `Eq` for `Schema` types - ([8601cce](https://github.com/thalo-rs/esdl/commit/8601cce3336a772fd8fecfee84460830d7ed4ccf)) - [@tqwewe](https://github.com/tqwewe)
+- add `Long`, `Double`, `Bytes` and remove `Timestamp` and `UInt` - ([28c4666](https://github.com/thalo-rs/esdl/commit/28c466662bc6e7f8a59f46e6b87b330ffa360283)) - [@tqwewe](https://github.com/tqwewe)
+- pest schema definition - ([7907d00](https://github.com/thalo-rs/esdl/commit/7907d000112248db4e1e187b15a7f93d50b8bf98)) - [@tqwewe](https://github.com/tqwewe)
+- support for `UInt` type - ([b21106d](https://github.com/thalo-rs/esdl/commit/b21106dfe1571a687d6f39f23f582881be1be478)) - [@tqwewe](https://github.com/tqwewe)
+#### Miscellaneous Chores
+- remove unused wasm feature flag - ([8f3540b](https://github.com/thalo-rs/esdl/commit/8f3540bf3fcc6c0469bd69b8fcc5b4046fd625bc)) - [@tqwewe](https://github.com/tqwewe)
+#### Refactoring
+- remove all codegen - ([1e07ae9](https://github.com/thalo-rs/esdl/commit/1e07ae9a3ee590cf57c9bc70ed57f9225e4017f4)) - [@tqwewe](https://github.com/tqwewe)
+
+- - -
+
 ## [0.5.0](https://github.com/thalo-rs/esdl/compare/0.4.0..0.5.0) - 2022-05-15
 #### Bug Fixes
 - **(examples/bank-account-wasm)** build script - ([214d730](https://github.com/thalo-rs/esdl/commit/214d7307bbb63d62e0195f45c1108995e22f413e)) - [@tqwewe](https://github.com/tqwewe)
