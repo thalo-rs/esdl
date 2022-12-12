@@ -6,7 +6,6 @@
 
 #![cfg_attr(docsrs, feature(doc_cfg, doc_auto_cfg))]
 
-pub mod codegen;
 mod error;
 pub(crate) mod parser;
 pub mod schema;
